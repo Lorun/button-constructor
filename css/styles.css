@@ -1,0 +1,304 @@
+body,
+html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  font-family: Tahoma, Arial, sans-serif;
+}
+a {
+  text-decoration: none;
+}
+.builder {
+  min-height: 100%;
+}
+.builder:before {
+  content: "";
+  display: block;
+  position: absolute;
+  z-index: 0;
+  left: 60%;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  background-color: #2f4255;
+}
+.builder-preview {
+  float: left;
+  width: 60%;
+  box-sizing: border-box;
+  padding: 50px 40px 40px;
+  text-align: center;
+}
+.builder-preview .preview-button {
+  margin-bottom: 30px;
+}
+.builder-preview .preview-code {
+  text-align: left;
+  font-size: 14px;
+  padding: 20px;
+}
+.builder-dashboard {
+  position: relative;
+  z-index: 1;
+  float: left;
+  width: 40%;
+  box-sizing: border-box;
+  background-color: #2f4255;
+  color: #7a97af;
+}
+.builder-dashboard input[type="text"] {
+  background-color: #3b5168;
+  color: #fff;
+  border: 1px solid #4a6077;
+  border-radius: 4px;
+  font-size: 13px;
+  font-family: Tahoma, Arial, sans-serif;
+  line-height: 16px;
+  padding: 3px 5px 2px;
+  box-sizing: border-box;
+  margin: 0;
+}
+.builder-dashboard input[type="text"]:focus {
+  outline: none;
+  border-color: #6285a9;
+}
+.builder-section .section-class {
+  padding: 15px 15px 15px 6px;
+  background-color: #2a3b4c;
+}
+.builder-section .section-class:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.builder-section .section-class .class-name {
+  display: inline-block;
+  float: left;
+  font-size: 18px;
+  font-family: "Courier New", Courier, monospace;
+  line-height: 24px;
+  color: #ffffff;
+}
+.builder-section .section-class .class-name input[type="text"] {
+  width: 140px;
+  padding: 0 5px;
+  margin: 0;
+  border: none;
+  font-size: 18px;
+  font-family: "Courier New", Courier, monospace;
+  line-height: 24px;
+  background-color: transparent;
+  color: #ffffff;
+}
+.builder-section .section-class .class-name input[type="text"]:focus {
+  background-color: #364c63;
+  outline: none;
+}
+.builder-rulesList {
+  margin: 0;
+  padding: 0;
+  float: right;
+  font-size: 0;
+}
+.builder-rulesList li {
+  position: relative;
+  display: inline-block;
+  font-size: 12px;
+  color: #516f8e;
+  border: 1px solid;
+  padding: 4px 8px;
+  cursor: pointer;
+  margin-right: -1px;
+}
+.builder-rulesList li:first-child {
+  border-radius: 4px 0 0 4px;
+}
+.builder-rulesList li:last-child {
+  border-radius: 0 4px 4px 0;
+}
+.builder-rulesList li:hover,
+.builder-rulesList li.is-selected {
+  color: #b2c7dd;
+  z-index: 1;
+}
+.builder-rule {
+  padding: 10px 15px;
+  border-bottom: 1px solid #394e63;
+}
+.builder-rule:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.builder-rule .rule-label {
+  display: inline-block;
+  width: 50px;
+  vertical-align: top;
+  line-height: 22px;
+  font-size: 13px;
+}
+.builder-rule .rule-input {
+  display: inline-block;
+  vertical-align: top;
+  width: 50px;
+  margin-left: 5px;
+}
+.builder-rule .rule-input input[type="text"] {
+  width: 100%;
+}
+.builder-rule .rule-input .input-label {
+  display: block;
+  width: 100%;
+  padding-top: 1px;
+  font-size: 10px;
+  text-align: center;
+  margin-bottom: -5px;
+}
+.builder-rule .rule-range {
+  display: inline-block;
+  vertical-align: middle;
+  width: 80px;
+  margin-left: 5px;
+}
+.builder-rule .rule-color {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  width: 46px;
+  height: 19px;
+  border: 2px solid #fff;
+  border-radius: 5px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  background-color: #eee;
+  margin-left: 5px;
+}
+.builder-rule .rule-color:before {
+  display: block;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+}
+.builder-rule .rule-buttons {
+  display: inline-block;
+  vertical-align: top;
+  margin-left: 5px;
+}
+.builder-rule .rule-button {
+  display: inline-block;
+  color: #516f8e;
+  border: 1px solid;
+  border-radius: 4px;
+  padding: 2px 2px 1px;
+  line-height: 18px;
+  font-size: 15px;
+  width: 20px;
+  text-align: center;
+  font-family: "Times New Roman", Times, serif;
+}
+.builder-rule .rule-button:hover,
+.builder-rule .rule-button.is-checked {
+  color: #fff;
+}
+.builder-rule .rule-button_bold {
+  font-weight: bold;
+}
+.builder-rule .rule-button_italic {
+  font-style: italic;
+  padding-left: 1px;
+}
+.popup-colorPicker {
+  display: none;
+  position: absolute;
+  z-index: 99;
+  top: 50%;
+  left: 50%;
+  width: 310px;
+  height: 220px;
+  margin: -110px 0 0 -155px;
+  box-sizing: border-box;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+}
+.popup-colorPicker .colorPicker-color {
+  float: left;
+}
+.popup-colorPicker .colorPicker-spectrum {
+  float: left;
+  margin-left: 10px;
+}
+.popup-colorPicker .colorPicker-selected {
+  width: 60px;
+  height: 60px;
+  box-sizing: border-box;
+  float: left;
+  margin-left: 10px;
+  background: #f00;
+  border: 1px solid #eee;
+}
+.popup-colorPicker .colorPicker-input {
+  width: 60px;
+  box-sizing: border-box;
+  float: left;
+  margin-left: 10px;
+  margin-top: 10px;
+  line-height: 20px;
+  font-size: 11px;
+  padding: 0 0 0 4px;
+  font-family: Tahoma, Arial, sans-serif;
+}
+.popup-colorPicker .colorPicker-choose {
+  display: inline-block;
+  outline: none;
+  border: none;
+  width: 60px;
+  margin: 0;
+  padding: 4px 4px;
+  box-sizing: border-box;
+  text-align: center;
+  line-height: 20px;
+  border-radius: 3px;
+  background-color: #e2e2e2;
+  color: #333;
+  font-family: Tahoma, Arial, sans-serif;
+  font-size: 12px;
+  cursor: pointer;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+.popup-colorPicker .colorPicker-choose:hover {
+  background-color: #eaeaea;
+}
+/* RANGESLIDER */
+.rangeslider {
+  position: relative;
+  width: 80px;
+  height: 3px;
+  background-color: #171c22;
+  border-radius: 2px;
+}
+.rangeslider-fill {
+  background-color: #fff;
+  border-radius: 2px;
+  height: 3px;
+}
+.rangeslider-handle {
+  position: absolute;
+  cursor: pointer;
+  width: 11px;
+  height: 11px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  top: -4px;
+  background-color: #fff;
+}
