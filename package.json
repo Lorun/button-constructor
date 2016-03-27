@@ -1,0 +1,32 @@
+{
+  "name": "button-constructor",
+  "version": "0.0.1",
+  "description": "Simple Button constructor",
+  "main": "index.html",
+  "style": "css/styles.css",
+  "directories": {
+    "app": "app",
+    "data": "data",
+    "build": "build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Lorun/button-constructor.git"
+  },
+  "keywords": [
+    "angular",
+    "button constructor",
+    "css generator"
+  ],
+  "author": "Lorun",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Lorun/button-constructor/issues"
+  },
+  "homepage": "https://Lorun.github.io/button-constructor",
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-uglify": "^1.0.1",
+    "grunt-contrib-concat": "^1.0.0"
+  }
+}

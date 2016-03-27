@@ -31,8 +31,7 @@
             'radius'    : ['border-radius'],
             'shadow'    : ['box-shadow-color', 'box-shadow-x', 'box-shadow-y', 'box-shadow-blur']
         })
-        .run(function(ButtonService) {
+        .run(['ButtonService', function(ButtonService) {
             ButtonService.loadJSON('default');
-        });
-
+        }]);
 })();
