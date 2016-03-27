@@ -5,9 +5,9 @@
         .module('app')
         .directive('renderDirective', renderDirective);
 
-    renderDirective.$inject = ['Button', 'Styles'];
+    renderDirective.$inject = ['ButtonService', 'Styles'];
 
-    function renderDirective(Button, Styles) {
+    function renderDirective(ButtonService, Styles) {
 
         return  {
             restrict: 'A',
@@ -17,7 +17,7 @@
 
         function link($scope, element, attrs) {
 
-            $scope.buttons = Button.getAll();
+            $scope.buttons = ButtonService.getAll();
 
             $scope.$watch('buttons', function() {
                 var styles = Styles.compile().getStyles();

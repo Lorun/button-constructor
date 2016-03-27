@@ -5,9 +5,9 @@
         .module('app')
         .factory('Styles', Styles);
 
-    Styles.$inject = ['Button', 'groupRulesDeps'];
+    Styles.$inject = ['ButtonService', 'groupRulesDeps'];
 
-    function Styles(Button, groupRulesDeps) {
+    function Styles(ButtonService, groupRulesDeps) {
 
         var tab = '    ',
             units = 'px',
@@ -24,7 +24,7 @@
          * @returns {Styles.compile}
          */
         function compile() {
-            var buttons = Button.getAll();
+            var buttons = ButtonService.getAll();
 
             // Clean old styles
             styles = '';
@@ -64,6 +64,8 @@
             styles += tab + 'display: inline-block;\n';
             styles += tab + 'cursor: pointer;\n';
             styles += tab + 'outline: none;\n';
+            styles += tab + '-webkit-transition: all 0.25s;\n';
+            styles += tab + 'transition: all 0.25s;\n';
         }
 
         function openSelector(className, role) {
@@ -86,7 +88,7 @@
 
             this.size = function() {
                 if (rules['height'] !== undefined) {
-                    var line_height = (rules['border'] !== undefined) ? rules['line-height'] - rules['border'] * 2 : rules['line-height'];
+                    var line_height = (rules['border'] !== undefined) ? rules['height'] - rules['border'] * 2 : rules['height'];
 
                     styles += tab + 'height: ' + rules.height + units + ';\n';
                     styles += tab + 'line-height: ' + line_height + units + ';\n';
@@ -112,9 +114,26 @@
                 }
             };
 
-            this.font = function() {};
-            this.uppercase = function() {};
-            this.radius = function() {};
+            this.font = function() {
+                if (rules['font-size'] !== undefined && rules['color'] !== undefined ) {
+                    styles += tab + 'font-size: ' + rules['font-size'] + units + ';\n';
+                    styles += tab + 'color: ' + rules['color'] + ';\n';
+                }
+                if (rules['font-weight'] !== undefined) {
+                    styles += tab + 'font-weight: ' + rules['font-weight'] + ';\n';
+                }
+                if (rules['font-style'] !== undefined) {
+                    styles += tab + 'font-style: ' + rules['font-style'] + ';\n';
+                }
+                if (rules['text-transform'] !== undefined) {
+                    styles += tab + 'text-transform: ' + rules['text-transform'] + ';\n';
+                }
+            };
+            this.radius = function() {
+                if (rules['border-radius'] !== undefined) {
+                    styles += tab + 'border-radius: ' + rules['border-radius'] + units + ';\n';
+                }
+            };
             this.shadow = function() {};
         }
     }

@@ -381,7 +381,7 @@ $(function() {
 
 
 
-;(function( global ) {
+(function( global ) {
 
     function ColorPicker() {
         this.target = null;

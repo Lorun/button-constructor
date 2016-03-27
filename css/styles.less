@@ -32,14 +32,17 @@ a {
         bottom: 0;
         right: 0;
         background-color: #2f4255;
+        border-left: 1px solid #2a3b4c;
     }
 }
 .builder-preview {
+    position: relative;
     float: left;
     width: 60%;
     box-sizing: border-box;
     padding: 50px 40px 40px;
     text-align: center;
+    border-left: 1px solid #2a3b4c;
     
     .preview-button {
         margin-bottom: 30px;
@@ -49,6 +52,26 @@ a {
         text-align: left;
         font-size: 14px;
         padding: 20px;
+    }
+    .preview-colorpicker {
+        position: fixed;
+        top: 15px;
+        left: 15px;
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        border: 1px solid rgba(183, 187, 189, 0.5);
+        box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.4);
+        &:before {
+            content: "";
+            display: block;
+            vertical-align: top;
+            width: 20px;
+            height: 10px;
+            background-color: rgba(183, 187, 189, 0.5);
+            border-radius: 10px 10px 0 0;
+        }
     }
 }
 .builder-dashboard {
@@ -79,10 +102,11 @@ a {
 }
 
 .builder-section {
+    border-bottom: 1px solid #253342;
 
     .section-class {
         .clearfix();
-        padding: 15px 15px 15px 6px;
+        padding: 15px 15px 15px 5px;
         background-color: #2a3b4c;
         .class-name {
             display: inline-block;
@@ -93,7 +117,7 @@ a {
             color: #ffffff;
             input[type="text"] {
                 width: 140px;
-                padding: 0 5px;
+                padding: 0 5px 0 10px;
                 margin: 0;
                 border: none;
                 font-size: 18px;
@@ -108,6 +132,10 @@ a {
             }
         }
     }
+}
+
+.builder-controls {
+    padding: 15px;
 }
 
 .builder-rulesList {
@@ -142,6 +170,9 @@ a {
     .clearfix();
     padding: 10px 15px;
     border-bottom: 1px solid #394e63;
+    &:last-child {
+        border-bottom: none;
+    }
 
     .rule-label {
         display: inline-block;
@@ -155,7 +186,7 @@ a {
         display: inline-block;
         vertical-align: top;
         width: 50px;
-        margin-left: 5px;
+        margin-left: 10px;
         input[type="text"] {
             width: 100%;
         }
@@ -173,7 +204,7 @@ a {
         display: inline-block;
         vertical-align: middle;
         width: 80px;
-        margin-left: 5px;
+        margin-left: 10px;
     }
 
     .rule-color {
@@ -186,7 +217,7 @@ a {
         border-radius: 5px;
         box-shadow: 0 1px 2px rgba(0,0,0, 0.2);
         background-color: #eee;
-        margin-left: 5px;
+        margin-left: 10px;
         &:before {
             display: block;
             content: "";
@@ -203,7 +234,7 @@ a {
     .rule-buttons {
         display: inline-block;
         vertical-align: top;
-        margin-left: 5px;
+        margin-left: 10px;
     }
     .rule-button {
         display: inline-block;
@@ -230,79 +261,25 @@ a {
     }
 }
 
-
-.popup-colorPicker {
-    display: none;
-    position: absolute;
-    z-index: 99;
-    top: 50%;
-    left: 50%;
-    width: 310px;
-    height: 220px;
-    margin: -110px 0 0 -155px;
+/* COMMON BUTTONS */
+.b-button {
     box-sizing: border-box;
-    padding: 10px;
-    background-color: #fff;
-    border-radius: 4px;
-    -webkit-box-shadow: 0 2px 20px rgba(0,0,0, 0.2);
-    -moz-box-shadow: 0 2px 20px rgba(0,0,0, 0.2);
-    box-shadow: 0 2px 20px rgba(0,0,0, 0.2);
-
-    .colorPicker-color {
-        float: left;
-    }
-
-    .colorPicker-spectrum {
-        float: left;
-        margin-left: 10px;
-    }
-
-    .colorPicker-selected {
-        width: 60px;
-        height: 60px;
-        box-sizing: border-box;
-        float: left;
-        margin-left: 10px;
-        background: #f00;
-        border: 1px solid #eee;
-    }
-
-    .colorPicker-input {
-        width: 60px;
-        box-sizing: border-box;
-        float: left;
-        margin-left: 10px;
-        margin-top: 10px;
-        line-height: 20px;
-        font-size: 11px;
-        padding: 0 0 0 4px;
-        font-family: Tahoma, Arial, sans-serif;
-    }
-
-    .colorPicker-choose {
-        display: inline-block;
-        outline: none;
-        border: none;
-        width: 60px;
-        margin: 0;
-        padding: 4px 4px;
-        box-sizing: border-box;
-        text-align: center;
-        line-height: 20px;
-        border-radius: 3px;
-        background-color: #e2e2e2;
-        color: #333;
-        font-family: Tahoma, Arial, sans-serif;
-        font-size: 12px;
-        cursor: pointer;
-
-        position: absolute;
-        bottom: 10px;
-        right: 10px;
-        
-        &:hover {
-            background-color: #eaeaea;
-        }
+    display: inline-block;
+    cursor: pointer;
+    outline: none;
+    -webkit-transition: all 0.25s;
+    transition: all 0.25s;
+    height: 40px;
+    line-height: 38px;
+    padding: 0px 20px 0px 20px;
+    background: #3c5c7a;
+    font-size: 14px;
+    color: #9ebfd1;
+    font-weight: bold;
+    border: 1px solid #577796;
+    border-radius: 5px;
+    &:hover {
+        background: #3a5670;
     }
 }
 
@@ -329,3 +306,5 @@ a {
     top: -4px;
     background-color: #fff;
 }
+
+@import "colorpicker";

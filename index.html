@@ -9,7 +9,28 @@
 
 </head>
 <body>
+<div class="builder" ng-init="previewBg = '#fff'" style="background-color: {{previewBg}}">
 
+    <div class="builder-preview">
+        <span class="preview-colorpicker" colorpicker ng-model="previewBg"></span>
+        <button-preview-list></button-preview-list>
+
+
+        <br><br>
+        <pre class="preview-code" render-directive="preview"></pre>
+
+    </div>
+
+    <div class="builder-dashboard">
+
+        <button-list></button-list>
+
+    </div>
+</div>
+
+
+
+<!-- SIZE -->
 <script type="text/ng-template" id="size.html">
     <span class="rule-label">Size</span>
     <div class="rule-input">
@@ -22,208 +43,60 @@
     </div>
 </script>
 
+<!-- FILL -->
 <script type="text/ng-template" id="fill.html">
     <span class="rule-label">Fill</span>
-    <a class="rule-color" href="#"><input type="hidden" ng-model="button.rules.background" value="{{button.rules.background}}"></a>
-</script>
-
-
-<div class="builder" ng-controller="buttonController as vm">
-
-    <div class="builder-preview">
-        <div class="preview-button" ng-repeat="button in vm.buttons" ng-if="button.role == 'common' || button.role == 'inherit'">
-            <button class="{{vm.buttons[0].classname}} {{button.classname}}">Text button</button>
-        </div>
-
-        <br><br>
-        <pre class="preview-code" render-directive="preview"></pre>
-    </div>
-
-    <div class="builder-dashboard">
-
-        <div class="builder-section" ng-repeat="button in vm.buttons">
-
-            <div class="section-class">
-                <span class="class-name">.<input type="text" ng-model="button.classname" value="{{button.classname}}"></span>
-                <ul class="builder-rulesList">
-                    <li ng-click="vm.toggleGroupRules('size', $index)" toggle-class="is-selected" ng-hide="button.role != 'common' && button.role != 'inherit'">Size</li>
-                    <li ng-click="vm.toggleGroupRules('fill', $index)" toggle-class="is-selected">Fill</li>
-                    <li ng-click="vm.toggleGroupRules('border', $index)" toggle-class="is-selected">Border</li>
-                    <li ng-click="vm.toggleGroupRules('radius', $index)" toggle-class="is-selected" ng-hide="button.role != 'common' && button.role != 'inherit'">Radius</li>
-                    <li ng-click="vm.toggleGroupRules('font', $index)" toggle-class="is-selected">Font</li>
-                    <li ng-click="vm.toggleGroupRules('shadow', $index)" toggle-class="is-selected">Shadow</li>
-                </ul>
-            </div>
-            <div class="section-rules">
-                <div class="builder-rule" ng-repeat="gr in button.groupRules" ng-include="gr+'.html'"></div>
-            </div>
-        </div>
-
-        <button ng-click="vm.addButton('hover')">Add hover</button>
-        <button ng-click="vm.addButton('inherit')">Add button</button>
-
-
-        <!--<div class="builder-section" data-button-class="button">
-
-            <div class="section-class">
-                <span class="class-name">.<input type="text" name="classname" value="button"></span>
-                <ul class="builder-rulesList">
-                    <li class="is-selected">Size</li>
-                    <li>Fill</li>
-                    <li>Border</li>
-                    <li>Radius</li>
-                    <li>Font</li>
-                    <li>Shadow</li>
-                </ul>
-            </div>
-            <div class="section-rules">
-
-
-                <div class="builder-rule">
-                    <span class="rule-label">Size</span>
-                    <div class="rule-input">
-                        <input type="text" name="height" value="30" class="js-rule-trigger">
-                        <span class="input-label">Height</span>
-                    </div>
-                </div>
-
-                <div class="builder-rule">
-                    <span class="rule-label">Fill</span>
-                    <a class="rule-color" href="#"><input type="hidden" name="background" value="" class="js-rule-trigger"></a>
-                </div>
-
-                <div class="builder-rule">
-                    <span class="rule-label">Border</span>
-                    <a class="rule-color" href="#"><input type="hidden" name="border-color" value="" class="js-rule-trigger"></a>
-                    <div class="rule-input">
-                        <input type="text" name="border" value="0" class="js-rule-trigger">
-                        <span class="input-label">Thuckness</span>
-                    </div>
-                </div>
-
-                <div class="builder-rule">
-                    <span class="rule-label">Font</span>
-                    <a class="rule-color" href="#"><input type="hidden" name="color" value="" class="js-rule-trigger"></a>
-                    <div class="rule-input">
-                        <input type="text" name="font-size" value="14" class="js-rule-trigger">
-                        <span class="input-label">Size</span>
-                    </div>
-                    <a class="rule-button rule-button_bold" href="#">B</a>
-                    <a class="rule-button rule-button_italic" href="#">I</a>
-                    <a class="rule-button rule-button_tt" href="#">TT</a>
-                </div>
-            </div>
-        </div>-->
-
-    </div>
-</div>
-
-
-<div class="popup-colorPicker">
-    <canvas class="colorPicker-color" height="200" id="js-spectrum-color" width="200"></canvas>
-    <canvas class="colorPicker-spectrum" height="200" id="js-spectrum-all" width="10"></canvas>
-    <div class="colorPicker-selected" id="js-color-selected"></div>
-    <input type="text" name="" class="colorPicker-input" id="js-color-input"/>
-    <button class="colorPicker-choose js-color-choose">Choose</button>
-</div>
-
-
-<script type="text/html" id="tmpl_button">
-    <div class="builder-section" data-button-class="<%=className%>" data-role="<%=role%>">
-
-        <div class="section-class">
-            <span class="class-name">.<input type="text" name="classname" value="<%=className%>"></span>
-            <ul class="builder-rulesList js-check-rules">
-                <li data-rules="size">Size</li>
-                <li data-rules="fill">Fill</li>
-                <li data-rules="border">Border</li>
-                <li data-rules="radius">Radius</li>
-                <li data-rules="font">Font</li>
-                <li data-rules="shadow">Shadow</li>
-            </ul>
-        </div>
-        <div class="section-rules"></div>
-    </div>
-</script>
-
-<script type="text/html" id="tmpl_button_pseudo">
-    <div class="builder-section" data-button-class="<%=className%>" data-role="<%=role%>">
-        <div class="section-class">
-            <span class="class-name">&:<input type="text" name="classname" value="<%=role%>"></span>
-            <ul class="builder-rulesList js-check-rules">
-                <li data-rules="fill">Fill</li>
-                <li data-rules="border">Border</li>
-                <li data-rules="font">Font</li>
-                <li data-rules="shadow">Shadow</li>
-            </ul>
-        </div>
-        <div class="section-rules"></div>
-    </div>
-</script>
-
-<!-- SIZE -->
-<script type="text/html" id="tmpl_rules_size">
-    <div class="builder-rule builder-rule_size">
-        <span class="rule-label">Size</span>
-        <div class="rule-input">
-            <input type="text" name="height" value="30" class="js-rule-trigger">
-            <span class="input-label">Height</span>
-        </div>
-        <div class="rule-input">
-            <input type="text" name="padding" value="15" class="js-rule-trigger">
-            <span class="input-label">Padding</span>
-        </div>
-    </div>
-</script>
-
-<!-- FILL -->
-<script type="text/html" id="tmpl_rules_fill">
-    <div class="builder-rule builder-rule_fill">
-        <span class="rule-label">Fill</span>
-        <a class="rule-color js-pick-color" href="javascript:void(0)" style="background: #4980b7"><input type="hidden" name="background" value="#4980b7" class="js-rule-trigger"></a>
-    </div>
+    <span class="rule-color" colorpicker ng-model="button.rules.background" style="background: {{button.rules.background}}"></span>
 </script>
 
 <!-- FONT -->
-<script type="text/html" id="tmpl_rules_font">
-    <div class="builder-rule builder-rule_font">
-        <span class="rule-label">Font</span>
-        <a class="rule-color js-pick-color" href="javascript:void(0)" style="background: #ffffff"><input type="hidden" name="color" value="#ffffff" class="js-rule-trigger"></a>
-        <div class="rule-input">
-            <input type="text" name="font-size" value="14" class="js-rule-trigger">
-            <span class="input-label">Size</span>
-        </div>
-        <div class="rule-buttons">
-            <a class="rule-button rule-button_bold js-silent-trigger" href="javascript:void(0)" data-rule="font-weight" data-value="bold">B</a>
-            <a class="rule-button rule-button_italic js-silent-trigger" href="javascript:void(0)" data-rule="font-style" data-value="italic">I</a>
-            <a class="rule-button rule-button_tt js-silent-trigger" href="javascript:void(0)" data-rule="text-transform" data-value="uppercase">TT</a>
-        </div>
+<script type="text/ng-template" id="font.html">
+    <span class="rule-label">Font</span>
+    <span class="rule-color" colorpicker ng-model="button.rules.color" style="background: {{button.rules.color}}"></span>
+    <div class="rule-input">
+        <input type="text" name="font-size" value="{{button.rules['font-size']}}" ng-model="button.rules['font-size']">
+        <span class="input-label">Size</span>
+    </div>
+    <div class="rule-buttons">
+        <a class="rule-button rule-button_bold" href="javascript:void(0)" toggle-silent-rule="font-weight" ng-model="button.rules['font-weight']">B</a>
+        <a class="rule-button rule-button_italic" href="javascript:void(0)" toggle-silent-rule="font-style" ng-model="button.rules['font-style']">I</a>
+        <a class="rule-button rule-button_tt" href="javascript:void(0)" toggle-silent-rule="text-transform" ng-model="button.rules['text-transform']">TT</a>
+    </div>
+</script>
+
+<script type="text/ng-template" id="border.html">
+    <span class="rule-label">Border</span>
+    <span class="rule-color" colorpicker ng-model="button.rules['border-color']" style="background: {{button.rules['border-color']}}"></span>
+    <div class="rule-input">
+        <input type="text" ng-model="button.rules['border']" value="{{button.rules['border']}}">
+        <span class="input-label">Thuckness</span>
     </div>
 </script>
 
 <!-- RADIUS -->
-<script type="text/html" id="tmpl_rules_radius">
-    <div class="builder-rule builder-rule_radius">
-        <span class="rule-label">Radius</span>
-        <div class="rule-input">
-            <input type="text" name="border-radius" value="4" class="js-rule-trigger">
-        </div>
-        <div class="rule-range">
-            <input type="range" min="0" max="50" step="1" value="4" data-rangeslider data-tracked="border-radius">
-        </div>
+<script type="text/ng-template" id="radius.html">
+    <span class="rule-label">Radius</span>
+    <div class="rule-input">
+        <input type="text" ng-model="button.rules['border-radius']" value="{{button.rules['border-radius']}}">
+    </div>
+    <div class="rule-range">
+        <input type="range" min="0" max="50" step="1" value="4" data-rangeslider data-tracked="border-radius">
     </div>
 </script>
 
 
-<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
-<script src="assets/js/rangeslider.min.js"></script>
+<!--<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+<script src="assets/js/rangeslider.min.js"></script>-->
 
 <script src="assets/js/angular.min.js"></script>
 <script src="app/app.module.js"></script>
-<script src="app/buttons/button.controller.js"></script>
+<script src="app/components/buttons/buttonList.component.js"></script>
+<script src="app/components/buttons/buttonPreviewList.component.js"></script>
 <script src="app/services/button.service.js"></script>
 <script src="app/services/styles.service.js"></script>
 <script src="app/components/render.directive.js"></script>
-<script src="app/components/toggleClass.directive.js"></script>
+<script src="app/components/toggleGroupRules.directive.js"></script>
+<script src="app/components/toggleSilentRule.directive.js"></script>
+<script src="app/colorpicker/colorpicker.module.js"></script>
 </body>
 </html>
