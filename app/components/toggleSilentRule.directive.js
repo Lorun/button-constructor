@@ -8,8 +8,11 @@
 
     function toggleSilentRule(defaultRules) {
         return  {
-            require: '?ngModel',
+            replace: true,
             restrict: 'A',
+            scope: {
+                ngModel: '='
+            },
             link: link
         };
 
@@ -22,28 +25,21 @@
             };
             var ruleValue = rules[rule];
 
-            if ($scope.button.rules[rule] !== undefined && $scope.button.rules[rule] !== 'normal') {
+            if ($scope.ngModel !== undefined && $scope.ngModel !== 'normal') {
                 element.addClass('is-checked');
             } else {
                 element.removeClass('is-checked');
             }
 
             element.bind('click', function() {
-                //ButtonService.setSilentRule($scope.button, rule);
                 element.toggleClass('is-checked');
-
-                if (ngModel) {
-                    if (ngModel.$modelValue !== ruleValue) {
-                        $scope.$apply(ngModel.$setViewValue(ruleValue));
-                    } else {
-                        $scope.$apply(ngModel.$setViewValue(defaultRules[rule]));
-                    }
+                if ($scope.ngModel !== ruleValue) {
+                    $scope.ngModel = ruleValue;
+                } else {
+                    $scope.ngModel = defaultRules[rule];
                 }
-
-                console.log(ngModel.$modelValue);
+                $scope.$apply();
             });
-
-            //console.log(element.val());
         }
     }
 
