@@ -265,28 +265,53 @@ a {
 .b-button:hover {
   background: #3a5670;
 }
-/* RANGESLIDER */
-.rangeslider {
+/* RANGE SLIDER */
+.range-slider {
   position: relative;
-  width: 80px;
-  height: 3px;
-  background-color: #171c22;
-  border-radius: 2px;
+  width: 100px;
+  height: 4px;
 }
-.rangeslider-fill {
-  background-color: #fff;
-  border-radius: 2px;
-  height: 3px;
-}
-.rangeslider-handle {
+.range-slider div {
+  white-space: nowrap;
   position: absolute;
+}
+.range-slider .bar {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  background-color: #222f3d;
+  overflow: hidden;
+}
+.range-slider .bar .selection {
+  width: 0;
+  height: 100%;
+  background: #13b6ff;
+}
+.range-slider .handle {
   cursor: pointer;
-  width: 11px;
-  height: 11px;
+  width: 12px;
+  height: 12px;
   box-sizing: border-box;
   border-radius: 50%;
   top: -4px;
   background-color: #fff;
+}
+.range-slider .handle.active {
+  background-color: #fff;
+}
+.range-slider .bubble {
+  display: none;
+  cursor: default;
+  top: -20px;
+  padding: 1px 3px 1px 3px;
+  font-size: 0.7em;
+  font-family: sans-serif;
+}
+.range-slider .bubble.active {
+  display: inline-block;
+}
+.range-slider .bubble.limit {
+  color: #777;
 }
 .colorpicker-visible,
 .colorpicker-visible .dropdown-menu {
