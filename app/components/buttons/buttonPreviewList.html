@@ -1,0 +1,3 @@
+<div class="preview-button" ng-repeat="button in $ctrl.buttons" ng-if="button.role == 'common' || button.role == 'inherit'">
+    <button class="{{$ctrl.buttons[0].classname}} {{button.classname}}">Text button</button>
+</div>

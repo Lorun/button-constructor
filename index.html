@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Button CSS Builder</title>
+
+    <link rel="stylesheet" href="css/styles.css"/>
+    <style id="dynamic-css" type="text/css"></style>
+
+</head>
+<body>
+<div class="builder" ng-init="previewBg = '#fff'" style="background-color: {{previewBg}}">
+
+    <div class="builder-preview">
+        <span class="preview-colorpicker" colorpicker ng-model="previewBg"></span>
+        <button-preview-list></button-preview-list>
+
+
+        <br><br>
+        <pre class="preview-code" render-directive="preview"></pre>
+
+    </div>
+
+    <div class="builder-dashboard">
+
+        <button-list></button-list>
+
+    </div>
+</div>
+
+
+
+<!-- SIZE -->
+<script type="text/ng-template" id="size.html">
+    <span class="rule-label">Size</span>
+    <div class="rule-input">
+        <input type="text" ng-model="button.rules.height" value="{{button.rules.height}}">
+        <span class="input-label">Height</span>
+    </div>
+    <div class="rule-input">
+        <input type="text" ng-model="button.rules.padding" value="{{button.rules.padding}}">
+        <span class="input-label">Padding</span>
+    </div>
+</script>
+
+<!-- FILL -->
+<script type="text/ng-template" id="fill.html">
+    <span class="rule-label">Fill</span>
+    <span class="rule-color" colorpicker ng-model="button.rules.background" style="background: {{button.rules.background}}"></span>
+</script>
+
+<!-- FONT -->
+<script type="text/ng-template" id="font.html">
+    <span class="rule-label">Font</span>
+    <span class="rule-color" colorpicker ng-model="button.rules.color" style="background: {{button.rules.color}}"></span>
+    <div class="rule-input">
+        <input type="text" name="font-size" value="{{button.rules['font-size']}}" ng-model="button.rules['font-size']">
+        <span class="input-label">Size</span>
+    </div>
+    <div class="rule-buttons">
+        <a class="rule-button rule-button_bold" href="javascript:void(0)" toggle-silent-rule="font-weight" ng-model="button.rules['font-weight']">B</a>
+        <a class="rule-button rule-button_italic" href="javascript:void(0)" toggle-silent-rule="font-style" ng-model="button.rules['font-style']">I</a>
+        <a class="rule-button rule-button_tt" href="javascript:void(0)" toggle-silent-rule="text-transform" ng-model="button.rules['text-transform']">TT</a>
+    </div>
+</script>
+
+<script type="text/ng-template" id="border.html">
+    <span class="rule-label">Border</span>
+    <span class="rule-color" colorpicker ng-model="button.rules['border-color']" style="background: {{button.rules['border-color']}}"></span>
+    <div class="rule-input">
+        <input type="text" ng-model="button.rules['border']" value="{{button.rules['border']}}">
+        <span class="input-label">Thuckness</span>
+    </div>
+</script>
+
+<!-- RADIUS -->
+<script type="text/ng-template" id="radius.html">
+    <span class="rule-label">Radius</span>
+    <div class="rule-input">
+        <input type="text" ng-model="button.rules['border-radius']" value="{{button.rules['border-radius']}}">
+    </div>
+    <div class="rule-range">
+        <input type="range" min="0" max="50" step="1" value="4" data-rangeslider data-tracked="border-radius">
+    </div>
+</script>
+
+
+<!--<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+<script src="assets/js/rangeslider.min.js"></script>-->
+
+<!-- Dev -->
+<script src="assets/js/angular.min.js"></script>
+<script src="app/app.module.js"></script>
+<script src="app/components/buttons/buttonList.component.js"></script>
+<script src="app/components/buttons/buttonPreviewList.component.js"></script>
+<script src="app/services/button.service.js"></script>
+<script src="app/services/styles.service.js"></script>
+<script src="app/components/render.directive.js"></script>
+<script src="app/components/toggleGroupRules.directive.js"></script>
+<script src="app/components/toggleSilentRule.directive.js"></script>
+<script src="app/colorpicker/colorpicker.module.js"></script>
+
+<!-- Production -->
+<!--<script src="assets/js/angular.min.js"></script>
+<script src="build/production.min.js"></script>-->
+</body>
+</html>
