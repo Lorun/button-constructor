@@ -2,16 +2,16 @@
 <div class="builder-section builder-section_{{button.role}}" ng-repeat="button in $ctrl.buttons">
 
     <div class="section-class">
-        <span class="class-name"><input type="text" ng-model="button.classname" ng-model-options="{debounce: 200}" value="{{button.classname}}"></span>
+        <span class="class-name">
+            <input type="text" classname="{{button.role}}" ng-model="button.classname">
+        </span>
         <ul class="builder-rulesList">
-
             <li ng-click="$ctrl.toggleGroupRules('size', $index)" toggle-group-rules="size">Size</li>
             <li ng-click="$ctrl.toggleGroupRules('fill', $index)" toggle-group-rules="fill">Fill</li>
             <li ng-click="$ctrl.toggleGroupRules('font', $index)" toggle-group-rules="font">Font</li>
             <li ng-click="$ctrl.toggleGroupRules('border', $index)" toggle-group-rules="border">Border</li>
             <li ng-click="$ctrl.toggleGroupRules('radius', $index)" toggle-group-rules="radius">Radius</li>
             <li ng-click="$ctrl.toggleGroupRules('shadow', $index)" toggle-group-rules="shadow">Shadow</li>
-
         </ul>
     </div>
     <div class="section-rules">
