@@ -15,7 +15,7 @@ a {
 .builder:before {
   content: "";
   display: block;
-  position: absolute;
+  position: fixed;
   z-index: 0;
   left: 60%;
   top: 0;
@@ -120,6 +120,37 @@ a {
 .builder-section .section-class .class-name input[type="text"]:focus {
   background-color: #364c63;
   outline: none;
+}
+.builder-section .section-control {
+  padding: 10px 15px;
+  border-top: 1px solid #253342;
+  text-align: right;
+}
+.builder-section .section-control .control-item {
+  display: inline-block;
+  margin-left: 10px;
+  color: #7898a8;
+  font-size: 13px;
+}
+.builder-section .section-control .control-item:hover,
+.builder-section .section-control .control-item.is-checked {
+  color: #13b6ff;
+}
+.builder-section .section-control .control-item:active {
+  color: #6dcdff;
+}
+.builder-section_hover,
+.builder-section_active,
+.builder-section_disabled {
+  padding-left: 30px;
+}
+.builder-section_hover .section-class,
+.builder-section_active .section-class,
+.builder-section_disabled .section-class,
+.builder-section_hover .section-rules,
+.builder-section_active .section-rules,
+.builder-section_disabled .section-rules {
+  border-left: 1px solid #253342;
 }
 .builder-controls {
   padding: 15px;
@@ -265,28 +296,53 @@ a {
 .b-button:hover {
   background: #3a5670;
 }
-/* RANGESLIDER */
-.rangeslider {
+/* RANGE SLIDER */
+.range-slider {
   position: relative;
-  width: 80px;
-  height: 3px;
-  background-color: #171c22;
-  border-radius: 2px;
+  width: 100px;
+  height: 4px;
 }
-.rangeslider-fill {
-  background-color: #fff;
-  border-radius: 2px;
-  height: 3px;
-}
-.rangeslider-handle {
+.range-slider div {
+  white-space: nowrap;
   position: absolute;
+}
+.range-slider .bar {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  background-color: #222f3d;
+  overflow: hidden;
+}
+.range-slider .bar .selection {
+  width: 0;
+  height: 100%;
+  background: #13b6ff;
+}
+.range-slider .handle {
   cursor: pointer;
-  width: 11px;
-  height: 11px;
+  width: 12px;
+  height: 12px;
   box-sizing: border-box;
   border-radius: 50%;
   top: -4px;
   background-color: #fff;
+}
+.range-slider .handle.active {
+  background-color: #fff;
+}
+.range-slider .bubble {
+  display: none;
+  cursor: default;
+  top: -20px;
+  padding: 1px 3px 1px 3px;
+  font-size: 0.7em;
+  font-family: sans-serif;
+}
+.range-slider .bubble.active {
+  display: inline-block;
+}
+.range-slider .bubble.limit {
+  color: #777;
 }
 .colorpicker-visible,
 .colorpicker-visible .dropdown-menu {

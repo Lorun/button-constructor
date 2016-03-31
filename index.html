@@ -64,6 +64,7 @@
     </div>
 </script>
 
+<!-- BORDER -->
 <script type="text/ng-template" id="border.html">
     <span class="rule-label">Border</span>
     <span class="rule-color" colorpicker ng-model="button.rules['border-color']" style="background: {{button.rules['border-color']}}"></span>
@@ -80,7 +81,7 @@
         <input type="text" ng-model="button.rules['border-radius']" value="{{button.rules['border-radius']}}">
     </div>
     <div class="rule-range">
-        <input type="range" min="0" max="50" step="1" value="4" data-rangeslider data-tracked="border-radius">
+        <div range-slider floor="0" ceiling="50" step="1" highlight="left" ng-model="button.rules['border-radius']"></div>
     </div>
 </script>
 
@@ -89,7 +90,7 @@
 <script src="assets/js/rangeslider.min.js"></script>-->
 
 <!-- Dev -->
-<!--<script src="assets/js/angular.min.js"></script>
+<script src="assets/js/angular.min.js"></script>
 <script src="app/app.module.js"></script>
 <script src="app/components/buttons/buttonList.component.js"></script>
 <script src="app/components/buttons/buttonPreviewList.component.js"></script>
@@ -98,10 +99,13 @@
 <script src="app/components/render.directive.js"></script>
 <script src="app/components/toggleGroupRules.directive.js"></script>
 <script src="app/components/toggleSilentRule.directive.js"></script>
-<script src="app/colorpicker/colorpicker.module.js"></script>-->
+<script src="app/components/classnameInput.directive.js"></script>
+<script src="app/components/togglePseudoClass.directive.js"></script>
+<script src="app/components/rangeSlider.directive.js"></script>
+<script src="app/colorpicker/colorpicker.module.js"></script>
 
 <!-- Production -->
-<script src="assets/js/angular.min.js"></script>
-<script src="build/production.min.js"></script>
+<!--<script src="assets/js/angular.min.js"></script>
+<script src="build/production.min.js"></script>-->
 </body>
 </html>

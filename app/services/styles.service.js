@@ -64,6 +64,7 @@
             styles += tab + 'display: inline-block;\n';
             styles += tab + 'cursor: pointer;\n';
             styles += tab + 'outline: none;\n';
+            styles += tab + 'text-decoration: none;\n';
             styles += tab + '-webkit-transition: all 0.25s;\n';
             styles += tab + 'transition: all 0.25s;\n';
         }
@@ -85,8 +86,9 @@
          * @constructor
          */
         function Render(rules, role) {
+            var render = {};
 
-            this.size = function() {
+            render.size = function() {
                 if (rules['height'] !== undefined) {
                     var line_height = (rules['border'] !== undefined) ? rules['height'] - rules['border'] * 2 : rules['height'];
 
@@ -100,13 +102,13 @@
                 }
             };
 
-            this.fill = function() {
+            render.fill = function() {
                 if (rules['background'] !== undefined) {
                     styles += tab + 'background: ' + rules['background'] + ';\n';
                 }
             };
 
-            this.border = function() {
+            render.border = function() {
                 if (rules['border'] !== undefined && rules['border'] != 0 ) {
                     styles += tab + 'border: ' + rules['border'] + units + ' solid ' + rules['border-color'] + ';\n';
                 } else if (role == 'common') {
@@ -114,7 +116,7 @@
                 }
             };
 
-            this.font = function() {
+            render.font = function() {
                 if (rules['font-size'] !== undefined && rules['color'] !== undefined ) {
                     styles += tab + 'font-size: ' + rules['font-size'] + units + ';\n';
                     styles += tab + 'color: ' + rules['color'] + ';\n';
@@ -129,12 +131,14 @@
                     styles += tab + 'text-transform: ' + rules['text-transform'] + ';\n';
                 }
             };
-            this.radius = function() {
+            render.radius = function() {
                 if (rules['border-radius'] !== undefined) {
                     styles += tab + 'border-radius: ' + rules['border-radius'] + units + ';\n';
                 }
             };
-            this.shadow = function() {};
+            render.shadow = function() {};
+
+            return render;
         }
     }
 
