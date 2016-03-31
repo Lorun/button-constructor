@@ -25,7 +25,7 @@ a {
     &:before {
         content: "";
         display: block;
-        position: absolute;
+        position: fixed;
         z-index: 0;
         left: 60%;
         top: 0;
@@ -131,6 +131,35 @@ a {
                 }
             }
         }
+    }
+
+    .section-control {
+        padding: 10px 15px;
+        border-top: 1px solid #253342;
+        //background-color: #253342;
+        text-align: right;
+        .control-item {
+            display: inline-block;
+            margin-left: 10px;
+            color: #7898a8;
+            font-size: 13px;
+            &:hover,
+            &.is-checked {
+                color: #13b6ff;
+            }
+            &:active {
+                color: #6dcdff;
+            }
+        }
+    }
+}
+.builder-section_hover,
+.builder-section_active,
+.builder-section_disabled {
+    padding-left: 30px;
+    .section-class,
+    .section-rules {
+        border-left: 1px solid #253342;
     }
 }
 

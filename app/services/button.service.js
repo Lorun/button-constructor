@@ -67,9 +67,9 @@
     }
 
 
-    ButtonService.$inject = ['$http', 'Button'];
+    ButtonService.$inject = ['$http', '$filter', 'Button'];
 
-    function ButtonService($http, Button) {
+    function ButtonService($http, $filter, Button) {
 
         var buttons = [];
 
@@ -77,7 +77,10 @@
             getAll: getAll,
             addButton: addButton,
             setSilentRule: setSilentRule,
-            loadJSON: loadJSON
+            toggleButtonSelector: toggleButtonSelector,
+            loadJSON: loadJSON,
+            renameClass: renameClass,
+            getSelectorsFor: getSelectorsFor
         };
 
 
@@ -94,8 +97,26 @@
         }
 
         function addButton(className, role) {
-            var button = new Button(className, role);
-            buttons.push(button);
+            var button = new Button(className, role),
+                count = buttons.length,
+                isAdded = false,
+                i = 0;
+
+            angular.forEach(buttons, function(btn, index) {
+                i++;
+                if (btn.classname == className && !isAdded) {
+                    buttons.splice(index+1, 0, button);
+                    isAdded = true;
+                }
+                if (i == count && !isAdded) {
+                    buttons.push(button);
+                }
+            });
+
+            if (count == 0) {
+                buttons.push(button);
+            }
+
             return button;
         }
 
@@ -110,6 +131,42 @@
             buttons[index].rules[rule] = rules[rule];
 
             console.log(buttons);
+        }
+
+        function toggleButtonSelector(className, role) {
+            var count = buttons.length,
+                i = 0;
+
+            angular.forEach(buttons, function(btn, index) {
+                i++;
+                if (btn.classname == className) {
+                    if (btn.role == role) {
+                        buttons.splice(index, 1);
+                        return;
+                    }
+                }
+                if (i == count){
+                    addButton(className, role);
+                }
+            });
+        }
+
+        function renameClass(oldClass, newClass) {
+            angular.forEach(buttons, function(btn) {
+                if (btn.classname == oldClass) {
+                    btn.classname = newClass;
+                }
+            });
+        }
+
+        function getSelectorsFor(className) {
+            var selectors = [];
+            angular.forEach(buttons, function(btn) {
+                if (btn.classname == className && btn.role != 'common') {
+                    selectors.push(btn.role);
+                }
+            });
+            return selectors;
         }
 
     }

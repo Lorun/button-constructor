@@ -15,7 +15,7 @@ a {
 .builder:before {
   content: "";
   display: block;
-  position: absolute;
+  position: fixed;
   z-index: 0;
   left: 60%;
   top: 0;
@@ -120,6 +120,37 @@ a {
 .builder-section .section-class .class-name input[type="text"]:focus {
   background-color: #364c63;
   outline: none;
+}
+.builder-section .section-control {
+  padding: 10px 15px;
+  border-top: 1px solid #253342;
+  text-align: right;
+}
+.builder-section .section-control .control-item {
+  display: inline-block;
+  margin-left: 10px;
+  color: #7898a8;
+  font-size: 13px;
+}
+.builder-section .section-control .control-item:hover,
+.builder-section .section-control .control-item.is-checked {
+  color: #13b6ff;
+}
+.builder-section .section-control .control-item:active {
+  color: #6dcdff;
+}
+.builder-section_hover,
+.builder-section_active,
+.builder-section_disabled {
+  padding-left: 30px;
+}
+.builder-section_hover .section-class,
+.builder-section_active .section-class,
+.builder-section_disabled .section-class,
+.builder-section_hover .section-rules,
+.builder-section_active .section-rules,
+.builder-section_disabled .section-rules {
+  border-left: 1px solid #253342;
 }
 .builder-controls {
   padding: 15px;

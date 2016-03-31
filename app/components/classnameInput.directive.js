@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('app')
-        .directive('classname', classnameDirective);
+        .directive('classnameInput', classnameDirective);
 
     classnameDirective.$inject = ['ButtonService'];
 
@@ -17,7 +17,7 @@
         };
 
         function link($scope, element, attrs) {
-            var role = attrs.classname,
+            var role = attrs.role,
                 input;
 
 
@@ -28,21 +28,31 @@
                 input.val($scope.ngModel.split('_')[1]);
 
                 input.on('blur keyup change', function() {
-                    $scope.ngModel = $scope.ngModel.split('_')[0]+'_'+input.val();
+                    //$scope.ngModel = $scope.ngModel.split('_')[0]+'_'+input.val();
+                    ButtonService.renameClass($scope.ngModel, $scope.ngModel.split('_')[0]+'_'+input.val());
                     $scope.$apply();
                 });
             } else if (role == 'common') {
                 var oldClass = $scope.ngModel;
+
                 element.on('blur keyup change', function() {
-                    //console.log($scope.ngModel);
+                    // TODO: Перенести в ButtonService
+                    var buttons = ButtonService.getAll(),
+                        count = buttons.length,
+                        i = 0;
                     angular.forEach(ButtonService.getAll(), function(button) {
                         var classMod = button.classname.split('_')[1];
+                        i++;
                         if (!!classMod) {
                             button.classname = $scope.ngModel+'_'+button.classname.split('_')[1];
                             $scope.$apply();
                         } else if (button.classname == oldClass) {
-                            oldClass = button.classname = $scope.ngModel;
+                            button.classname = $scope.ngModel;
                             $scope.$apply();
+                        }
+
+                        if (count == i) {
+                            oldClass = $scope.ngModel;
                         }
                     });
                 });

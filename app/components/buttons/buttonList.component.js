@@ -16,10 +16,15 @@
         vm.buttons = ButtonService.getAll();
         vm.addButton = addButton;
         vm.toggleGroupRules = toggleGroupRules;
+        vm.removeButton = removeButton;
 
 
         function addButton(className, role) {
             ButtonService.addButton(className, role);
+        }
+
+        function removeButton(index) {
+            vm.buttons.splice(index, 1);
         }
 
         function toggleGroupRules(groupName, index) {
