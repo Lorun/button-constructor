@@ -12,7 +12,7 @@
 <div class="builder" ng-init="previewBg = '#fff'" style="background-color: {{previewBg}}">
 
     <div class="builder-preview">
-        <span class="preview-colorpicker" colorpicker ng-model="previewBg"></span>
+        <span class="preview-colorpicker" colorpicker ng-model="previewBg"><span ng-include="'/assets/images/icon-paint-bucket.svg'"></span></span>
         <button-preview-list></button-preview-list>
 
 
@@ -34,11 +34,11 @@
 <script type="text/ng-template" id="size.html">
     <span class="rule-label">Size</span>
     <div class="rule-input">
-        <input type="text" ng-model="button.rules.height" value="{{button.rules.height}}">
+        <input type="text" ng-model="button[section].rules.height" value="">
         <span class="input-label">Height</span>
     </div>
     <div class="rule-input">
-        <input type="text" ng-model="button.rules.padding" value="{{button.rules.padding}}">
+        <input type="text" ng-model="button[section].rules.padding" value="">
         <span class="input-label">Padding</span>
     </div>
 </script>
@@ -46,30 +46,30 @@
 <!-- FILL -->
 <script type="text/ng-template" id="fill.html">
     <span class="rule-label">Fill</span>
-    <span class="rule-color" colorpicker ng-model="button.rules.background" style="background: {{button.rules.background}}"></span>
+    <span class="rule-color" colorpicker ng-model="button[section].rules.background" style="background: {{button[section].rules.background}}"></span>
 </script>
 
 <!-- FONT -->
 <script type="text/ng-template" id="font.html">
     <span class="rule-label">Font</span>
-    <span class="rule-color" colorpicker ng-model="button.rules.color" style="background: {{button.rules.color}}"></span>
+    <span class="rule-color" colorpicker ng-model="button[section].rules.color" style="background: {{button[section].rules.color}}"></span>
     <div class="rule-input">
-        <input type="text" name="font-size" value="{{button.rules['font-size']}}" ng-model="button.rules['font-size']">
+        <input type="text" name="font-size" value="" ng-model="button[section].rules['font-size']">
         <span class="input-label">Size</span>
     </div>
     <div class="rule-buttons">
-        <a class="rule-button rule-button_bold" href="javascript:void(0)" toggle-silent-rule="font-weight" ng-model="button.rules['font-weight']">B</a>
-        <a class="rule-button rule-button_italic" href="javascript:void(0)" toggle-silent-rule="font-style" ng-model="button.rules['font-style']">I</a>
-        <a class="rule-button rule-button_tt" href="javascript:void(0)" toggle-silent-rule="text-transform" ng-model="button.rules['text-transform']">TT</a>
+        <a class="rule-button rule-button_bold" href="javascript:void(0)" toggle-silent-rule="font-weight" ng-model="button[section].rules['font-weight']">B</a>
+        <a class="rule-button rule-button_italic" href="javascript:void(0)" toggle-silent-rule="font-style" ng-model="button[section].rules['font-style']">I</a>
+        <a class="rule-button rule-button_tt" href="javascript:void(0)" toggle-silent-rule="text-transform" ng-model="button[section].rules['text-transform']">TT</a>
     </div>
 </script>
 
 <!-- BORDER -->
 <script type="text/ng-template" id="border.html">
     <span class="rule-label">Border</span>
-    <span class="rule-color" colorpicker ng-model="button.rules['border-color']" style="background: {{button.rules['border-color']}}"></span>
+    <span class="rule-color" colorpicker ng-model="button[section].rules['border-color']" style="background: {{button[section].rules['border-color']}}"></span>
     <div class="rule-input">
-        <input type="text" ng-model="button.rules['border']" value="{{button.rules['border']}}">
+        <input type="text" ng-model="button[section].rules['border']" value="">
         <span class="input-label">Thuckness</span>
     </div>
 </script>
@@ -78,16 +78,13 @@
 <script type="text/ng-template" id="radius.html">
     <span class="rule-label">Radius</span>
     <div class="rule-input">
-        <input type="text" ng-model="button.rules['border-radius']" value="{{button.rules['border-radius']}}">
+        <input type="text" ng-model="button[section].rules['border-radius']" value="">
     </div>
     <div class="rule-range">
-        <div range-slider floor="0" ceiling="50" step="1" highlight="left" ng-model="button.rules['border-radius']"></div>
+        <div range-slider floor="0" ceiling="50" step="1" highlight="left" ng-model="button[section].rules['border-radius']"></div>
     </div>
 </script>
 
-
-<!--<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
-<script src="assets/js/rangeslider.min.js"></script>-->
 
 <!-- Dev -->
 <script src="assets/js/angular.min.js"></script>
@@ -99,8 +96,7 @@
 <script src="app/components/render.directive.js"></script>
 <script src="app/components/toggleGroupRules.directive.js"></script>
 <script src="app/components/toggleSilentRule.directive.js"></script>
-<script src="app/components/classnameInput.directive.js"></script>
-<script src="app/components/togglePseudoClass.directive.js"></script>
+<script src="app/components/toggleSelector.directive.js"></script>
 <script src="app/components/rangeSlider.directive.js"></script>
 <script src="app/colorpicker/colorpicker.module.js"></script>
 

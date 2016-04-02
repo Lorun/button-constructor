@@ -11,7 +11,8 @@
 
         var tab = '    ',
             units = 'px',
-            styles;
+            styles,
+            separator = '_';
 
         return {
             compile: compile,
@@ -25,27 +26,42 @@
          */
         function compile() {
             var buttons = ButtonService.getAll();
+            var options = ButtonService.getOptions();
+            var buttonClass = options.className;
+
+            separator = options.separator;
 
             // Clean old styles
-            styles = '';
+            styles = '/* Button Component styles */\n';
 
             angular.forEach(buttons, function(button) {
-                var renderGroup = new Render(button.rules, button.role);
-
-                openSelector(button.classname, button.role);
-
-                if (button.role == 'common') {
-                    setCommon();
+                var buttonCopy = angular.copy(button);
+                for (var section in buttonCopy) {
+                    if (buttonCopy.hasOwnProperty(section) && section != 'modifier' && !!button[section]) {
+                        _compileSilentBtn(button, section, buttonClass);
+                    }
                 }
-
-                angular.forEach(groupRulesDeps, function(styles, group) {
-                    renderGroup[group]();
-                });
-
-                closeSelector();
             });
 
             return this;
+        }
+
+        function _compileSilentBtn(button, section, buttonClass) {
+            var renderGroup = new Render(button[section].rules, section);
+            var className = !!button.modifier ? buttonClass+separator+button.modifier : buttonClass;
+            var hasBorder = button[section].groupRules.indexOf('border') >= 0;
+
+            openSelector(className, section);
+
+            if (!button.modifier && section == 'common') {
+                setCommon(hasBorder);
+            }
+
+            angular.forEach(button[section].groupRules, function(group) {
+                renderGroup[group]();
+            });
+
+            closeSelector();
         }
 
         /**
@@ -59,7 +75,7 @@
         /**
          * Set common styles for general Button
          */
-        function setCommon() {
+        function setCommon(hasBorder) {
             styles += tab + 'box-sizing: border-box;\n';
             styles += tab + 'display: inline-block;\n';
             styles += tab + 'cursor: pointer;\n';
@@ -67,10 +83,14 @@
             styles += tab + 'text-decoration: none;\n';
             styles += tab + '-webkit-transition: all 0.25s;\n';
             styles += tab + 'transition: all 0.25s;\n';
+
+            if (!hasBorder) {
+                styles += tab + 'border: none;\n';
+            }
         }
 
-        function openSelector(className, role) {
-            var classNameRender = (role == 'common' || role == 'inherit') ? className : className+':'+role;
+        function openSelector(className, section) {
+            var classNameRender = (section == 'common') ? className : className+':'+section;
             styles += '.' + classNameRender + ' {\n';
         }
 
@@ -89,13 +109,13 @@
             var render = {};
 
             render.size = function() {
-                if (rules['height'] !== undefined) {
-                    var line_height = (rules['border'] !== undefined) ? rules['height'] - rules['border'] * 2 : rules['height'];
+                if (!!rules['height']) {
+                    var line_height = (!!rules['border']) ? rules['height'] - rules['border'] * 2 : rules['height'];
 
                     styles += tab + 'height: ' + rules.height + units + ';\n';
                     styles += tab + 'line-height: ' + line_height + units + ';\n';
 
-                    if (rules['padding'] !== undefined) {
+                    if (!!rules['padding']) {
                         rules['padding-right'] = rules['padding-left'] = rules['padding'];
                     }
                     styles += tab + 'padding: ' + rules['padding-top'] + units + ' ' + rules['padding-right'] + units + ' ' + rules['padding-bottom'] + units + ' ' + rules['padding-left'] + units + ';\n';
@@ -103,13 +123,13 @@
             };
 
             render.fill = function() {
-                if (rules['background'] !== undefined) {
+                if (!!rules['background']) {
                     styles += tab + 'background: ' + rules['background'] + ';\n';
                 }
             };
 
             render.border = function() {
-                if (rules['border'] !== undefined && rules['border'] != 0 ) {
+                if (!!rules['border'] && rules['border'] != 0 ) {
                     styles += tab + 'border: ' + rules['border'] + units + ' solid ' + rules['border-color'] + ';\n';
                 } else if (role == 'common') {
                     styles += tab + 'border: none;\n';
@@ -117,22 +137,22 @@
             };
 
             render.font = function() {
-                if (rules['font-size'] !== undefined && rules['color'] !== undefined ) {
+                if (!!rules['font-size'] && !!rules['color']) {
                     styles += tab + 'font-size: ' + rules['font-size'] + units + ';\n';
                     styles += tab + 'color: ' + rules['color'] + ';\n';
                 }
-                if (rules['font-weight'] !== undefined) {
+                if (!!rules['font-weight']) {
                     styles += tab + 'font-weight: ' + rules['font-weight'] + ';\n';
                 }
-                if (rules['font-style'] !== undefined) {
+                if (!!rules['font-style']) {
                     styles += tab + 'font-style: ' + rules['font-style'] + ';\n';
                 }
-                if (rules['text-transform'] !== undefined) {
+                if (!!rules['text-transform']) {
                     styles += tab + 'text-transform: ' + rules['text-transform'] + ';\n';
                 }
             };
             render.radius = function() {
-                if (rules['border-radius'] !== undefined) {
+                if (!!rules['border-radius']) {
                     styles += tab + 'border-radius: ' + rules['border-radius'] + units + ';\n';
                 }
             };

@@ -27,10 +27,10 @@ a {
         display: block;
         position: fixed;
         z-index: 0;
-        left: 60%;
         top: 0;
         bottom: 0;
         right: 0;
+        width: 500px;
         background-color: #2f4255;
         border-left: 1px solid #2a3b4c;
     }
@@ -38,19 +38,19 @@ a {
 .builder-preview {
     position: relative;
     float: left;
-    width: 60%;
+    width: calc(~'100% - 500px');
     box-sizing: border-box;
     padding: 50px 40px 40px;
     text-align: center;
     border-left: 1px solid #2a3b4c;
-    
+
     .preview-button {
         margin-bottom: 30px;
     }
 
     .preview-code {
         text-align: left;
-        font-size: 14px;
+        font-size: 10px;
         padding: 20px;
     }
     .preview-colorpicker {
@@ -58,31 +58,24 @@ a {
         top: 15px;
         left: 15px;
         display: inline-block;
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        border: 1px solid rgba(183, 187, 189, 0.5);
-        box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.4);
-        &:before {
-            content: "";
-            display: block;
-            vertical-align: top;
-            width: 20px;
-            height: 10px;
-            background-color: rgba(183, 187, 189, 0.5);
-            border-radius: 10px 10px 0 0;
+        width: 24px;
+        height: 24px;
+        svg {
+            width: 100%;
+            height: 100%;
+            fill: fade(#515e75, 70%);
         }
     }
 }
 .builder-dashboard {
     position: relative;
     z-index: 1;
-    float: left;
-    width: 40%;
+    float: right;
+    width: 500px;
     box-sizing: border-box;
     background-color: #2f4255;
     color: #7a97af;
-    
+
     input[type="text"] {
         background-color: #3b5168;
         color: #fff;
@@ -101,8 +94,11 @@ a {
     }
 }
 
-.builder-section {
+.builder-buttonFull {
     border-bottom: 1px solid #253342;
+}
+
+.builder-section {
 
     .section-class {
         .clearfix();
@@ -116,7 +112,7 @@ a {
             line-height: 24px;
             color: #ffffff;
             input[type="text"] {
-                width: 140px;
+                width: 180px;
                 padding: 0 5px 0 10px;
                 margin: 0;
                 border: none;
@@ -136,7 +132,6 @@ a {
     .section-control {
         padding: 10px 15px;
         border-top: 1px solid #253342;
-        //background-color: #253342;
         text-align: right;
         .control-item {
             display: inline-block;
@@ -153,16 +148,14 @@ a {
         }
     }
 }
-.builder-section_hover,
-.builder-section_active,
-.builder-section_disabled {
+.builder-section_selector {
     padding-left: 30px;
+    border-top: 1px solid #253342;
     .section-class,
     .section-rules {
         border-left: 1px solid #253342;
     }
 }
-
 .builder-controls {
     padding: 15px;
 }
@@ -300,7 +293,7 @@ a {
     transition: all 0.25s;
     height: 40px;
     line-height: 38px;
-    padding: 0px 20px 0px 20px;
+    padding: 0 20px 0 20px;
     background: #3c5c7a;
     font-size: 14px;
     color: #9ebfd1;

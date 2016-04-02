@@ -13,8 +13,8 @@
     function buttonPreviewListController(ButtonService) {
         var vm = this;
 
+        vm.options = ButtonService.getOptions();
         vm.buttons = ButtonService.getAll();
-
     }
 
 })();

@@ -1,32 +1,31 @@
 {
   "button": [
     {
-      "classname": "button",
-      "role": "common",
-      "rules": {
-        "background": "#f95f7c",
-        "height": 50,
-        "line-height": 50,
-        "padding": 30,
-        "padding-left": 30,
-        "padding-right": 30,
-        "padding-top": 0,
-        "padding-bottom": 0,
-        "font-size": 16,
-        "color": "#fff",
-        "font-weight": "normal",
-        "text-transform": "uppercase",
-        "border-radius": 5
+      "modifier": null,
+      "common": {
+        "rules": {
+          "background": "#f95f7c",
+          "height": 50,
+          "line-height": 50,
+          "padding": 30,
+          "padding-left": 30,
+          "padding-right": 30,
+          "padding-top": 0,
+          "padding-bottom": 0,
+          "font-size": 16,
+          "color": "#fff",
+          "font-weight": "normal",
+          "text-transform": "uppercase",
+          "border-radius": 5
+        },
+        "groupRules": ["fill", "size", "font", "radius"]
       },
-      "groupRules": ["fill", "size", "font", "radius"]
-    },
-    {
-      "classname": "button",
-      "role": "hover",
-      "rules": {
-        "background": "#f14062"
-      },
-      "groupRules": ["fill"]
+      "hover": {
+        "rules": {
+          "background": "#f14062"
+        },
+        "groupRules": ["fill"]
+      }
     }
   ]
 }

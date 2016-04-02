@@ -15,16 +15,21 @@
         };
 
 
-        function link($scope, element, attrs) {
+        function link($scope, element) {
 
             $scope.buttons = ButtonService.getAll();
+            $scope.options = ButtonService.getOptions();
 
             $scope.$watch('buttons', function() {
-                var styles = Styles.compile().getStyles();
-                onRender(styles);
+                onChange();
             }, true);
 
-            function onRender(styles) {
+            $scope.$watch('options', function() {
+                onChange();
+            }, true);
+
+            function onChange() {
+                var styles = Styles.compile().getStyles();
                 element.text(styles);
                 angular.element(document.getElementById('dynamic-css')).text(styles);
             }

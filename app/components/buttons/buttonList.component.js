@@ -13,14 +13,16 @@
     function buttonListController(ButtonService) {
         var vm = this;
 
+        vm.options = ButtonService.getOptions();
         vm.buttons = ButtonService.getAll();
-        vm.addButton = addButton;
+        vm.appendButton = appendButton;
         vm.toggleGroupRules = toggleGroupRules;
         vm.removeButton = removeButton;
+        vm.getSections = getSections;
 
 
-        function addButton(className, role) {
-            ButtonService.addButton(className, role);
+        function appendButton(modifier) {
+            ButtonService.addButton(modifier).addState('common');
         }
 
         function removeButton(index) {
@@ -29,6 +31,19 @@
 
         function toggleGroupRules(groupName, index) {
             vm.buttons[index].toggleGroup(groupName);
+        }
+
+
+        function getSections(btn) {
+            var sections = [],
+                copy = angular.copy(btn);
+
+            for (var prop in copy) {
+                if (copy.hasOwnProperty(prop) && prop != 'modifier' && copy[prop] != null) {
+                    sections.push(prop);
+                }
+            }
+            return sections;
         }
     }
 
