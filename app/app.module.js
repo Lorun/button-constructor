@@ -15,10 +15,10 @@
             'border-color'      : '#3171b1',
             'border'            : 1,
             'font-size'         : 14,
-            'color'             : '#fff',
+            'color'             : '#ffffff',
             'font-weight'       : 'normal',
             'border-radius'     : 4,
-            'box-shadow-color'  : 'rgba(0,0,0,0.2)',
+            'box-shadow-color'  : 'rgba(0, 0, 0, 0.2)',
             'box-shadow-x'      : 0,
             'box-shadow-y'      : 1,
             'box-shadow-blur'   : 4

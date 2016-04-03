@@ -5,3 +5,7 @@
          class="builder-section{{section != 'common' ? ' builder-section_selector' : ''}}"
          ng-include="'app/components/buttons/buttonSection.' + (section == 'common' ? 'common' : 'selector') + '.html'"></div>
 </div>
+
+<div class="builder-controls">
+    <button ng-click="$ctrl.appendButton('size')" class="b-button">Add button</button>
+</div>

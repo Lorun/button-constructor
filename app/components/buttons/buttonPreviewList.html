@@ -1,4 +1,8 @@
+<div class="__preview-buttonText" ng-init="buttonText = 'My button'">
+    <input type="text" ng-model="buttonText"/>
+</div>
+
 <div class="__preview-button" ng-repeat="button in $ctrl.buttons">
-    <button class="{{$ctrl.options.className}} {{!!button.modifier ? $ctrl.options.className + $ctrl.options.separator + button.modifier : ''}}">Text button</button>
+    <button class="{{$ctrl.options.className}} {{!!button.modifier ? $ctrl.options.className + $ctrl.options.separator + button.modifier : ''}}">{{buttonText}}</button>
     <button class="{{$ctrl.options.className}} {{!!button.modifier ? $ctrl.options.className + $ctrl.options.separator + button.modifier : ''}}" disabled>Disabled</button>
 </div>

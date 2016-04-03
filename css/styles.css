@@ -1,10 +1,11 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&subset=latin,cyrillic');
 body,
 html {
   height: 100%;
   margin: 0;
   padding: 0;
   font-size: 16px;
-  font-family: Tahoma, Arial, sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
 a {
   text-decoration: none;
@@ -29,13 +30,15 @@ body:before {
 }
 input[type="text"],
 input[type="email"],
-input[type="url"] {
-  font-family: Tahoma, Arial, sans-serif;
+input[type="url"],
+input[type="number"] {
+  font-family: 'Open Sans', sans-serif;
 }
 .g-preview-list {
   float: left;
   width: 100%;
-  padding-top: 30px;
+  padding-top: 55px;
+  padding-right: 40px;
 }
 .g-css-body {
   min-height: 100%;
@@ -62,8 +65,29 @@ input[type="url"] {
   width: calc(100% - 500px);
   box-sizing: border-box;
   padding: 0 260px 40px 40px;
-  text-align: center;
+  text-align: left;
   border-left: 1px solid #2a3b4c;
+}
+.g-css .__builder-preview .__preview-buttonText {
+  margin-bottom: 40px;
+}
+.g-css .__builder-preview .__preview-buttonText input[type="text"] {
+  display: block;
+  width: 100%;
+  margin: 0 auto;
+  background-color: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(220, 224, 226, 0.6);
+  color: #1c2024;
+  padding: 5px 15px;
+  line-height: 40px;
+  height: 60px;
+  font-size: 24px;
+  border-radius: 5px;
+  text-align: left;
+}
+.g-css .__builder-preview .__preview-buttonText input[type="text"]:focus {
+  outline: none;
+  background-color: rgba(230, 234, 236, 0.6);
 }
 .g-css .__builder-preview .__preview-button {
   margin-bottom: 30px;
@@ -90,8 +114,8 @@ input[type="url"] {
 }
 .g-css .__builder-preview .__preview-colorpicker {
   position: fixed;
-  top: 15px;
-  left: 15px;
+  top: 10px;
+  left: 10px;
   display: inline-block;
   width: 24px;
   height: 24px;
@@ -110,21 +134,25 @@ input[type="url"] {
   background-color: #2f4255;
   color: #7a97af;
 }
-.g-css .builder-dashboard input[type="text"] {
+.g-css .builder-dashboard input[type="text"],
+.g-css .builder-dashboard input[type="number"] {
   background-color: #3b5168;
   color: #fff;
   border: 1px solid #4a6077;
   border-radius: 4px;
   font-size: 13px;
-  font-family: Tahoma, Arial, sans-serif;
+  font-family: 'Open Sans', sans-serif;
+  height: 23px;
   line-height: 16px;
-  padding: 3px 5px 2px;
+  padding: 2px 5px 2px;
   box-sizing: border-box;
   margin: 0;
 }
-.g-css .builder-dashboard input[type="text"]:focus {
+.g-css .builder-dashboard input[type="text"]:focus,
+.g-css .builder-dashboard input[type="number"]:focus {
   outline: none;
-  border-color: #6285a9;
+  border-color: #13b6ff;
+  background-color: #455f7a;
 }
 .g-css .builder-buttonFull .builder-section:nth-child(2) .section-class {
   border-top: none;
@@ -143,7 +171,7 @@ input[type="url"] {
 }
 .g-css .builder-section .section-class {
   padding: 15px 15px 15px 5px;
-  background-color: #2a3b4c;
+  background-color: #253342;
 }
 .g-css .builder-section .section-class:after {
   content: "";
@@ -172,6 +200,7 @@ input[type="url"] {
   border: none;
   font-size: 18px;
   font-family: "Courier New", Courier, monospace;
+  height: 24px;
   line-height: 24px;
   background-color: transparent;
   color: #a4ff53;
@@ -190,6 +219,7 @@ input[type="url"] {
   padding: 10px 15px;
   border-top: 1px solid #253342;
   border-bottom: 1px solid #253342;
+  background-color: #2a3b4c;
   text-align: right;
 }
 .g-css .builder-section .section-control .control-item {
@@ -215,6 +245,7 @@ input[type="url"] {
 .g-css .builder-section_selector .section-class {
   border-top: 1px solid #253342;
   padding-left: 13px;
+  background-color: #2a3b4c;
 }
 .g-css .builder-section_selector:last-child {
   border-bottom: 1px solid #253342;
@@ -237,7 +268,8 @@ input[type="url"] {
   font-size: 12px;
   color: #516f8e;
   border: 1px solid;
-  padding: 4px 8px;
+  padding: 4px 7px;
+  line-height: 14px;
   cursor: pointer;
   margin-right: -1px;
 }
@@ -277,7 +309,8 @@ input[type="url"] {
   width: 50px;
   margin-left: 10px;
 }
-.g-css .builder-rule .rule-input input[type="text"] {
+.g-css .builder-rule .rule-input input[type="text"],
+.g-css .builder-rule .rule-input input[type="number"] {
   width: 100%;
 }
 .g-css .builder-rule .rule-value-label {
