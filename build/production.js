@@ -18,13 +18,13 @@
             'padding-top'       : 0,
             'padding-bottom'    : 0,
             'background'        : '#4980b7',
-            'border-color'      : '#2f4255',
+            'border-color'      : '#3171b1',
             'border'            : 1,
             'font-size'         : 14,
-            'color'             : '#fff',
+            'color'             : '#ffffff',
             'font-weight'       : 'normal',
             'border-radius'     : 4,
-            'box-shadow-color'  : 'rgba(0,0,0,0.2)',
+            'box-shadow-color'  : 'rgba(0, 0, 0, 0.2)',
             'box-shadow-x'      : 0,
             'box-shadow-y'      : 1,
             'box-shadow-blur'   : 4
@@ -317,8 +317,8 @@
                         inline = angular.isDefined(attrs.colorpickerInline) ? attrs.colorpickerInline : false,
                         fixedPosition = angular.isDefined(attrs.colorpickerFixedPosition) ? attrs.colorpickerFixedPosition : false,
                         target = angular.isDefined(attrs.colorpickerParent) ? elem.parent() : angular.element(document.body),
-                        withInput = angular.isDefined(attrs.colorpickerWithInput) ? attrs.colorpickerWithInput : false,
-                        componentSize = angular.isDefined(attrs.colorpickerSize) ? attrs.colorpickerSize : 100,
+                        withInput = angular.isDefined(attrs.colorpickerWithInput) ? attrs.colorpickerWithInput : true,
+                        componentSize = angular.isDefined(attrs.colorpickerSize) ? attrs.colorpickerSize : 160,
                         componentSizePx = componentSize + 'px',
                         inputTemplate = withInput ? '<input type="text" name="colorpicker-input" spellcheck="false">' : '',
                         closeButton = !inline ? '<button type="button" class="close close-colorpicker">&times;</button>' : '',
@@ -526,7 +526,7 @@
                             };
                         } else if (position === 'bottom') {
                             positionValue = {
-                                'top': positionOffset.top + elem[0].offsetHeight + 2,
+                                'top': positionOffset.top + elem[0].offsetHeight + 10,
                                 'left': positionOffset.left
                             };
                         } else if (position === 'left') {
@@ -639,14 +639,15 @@
     function buttonListController(ButtonService) {
         var vm = this;
 
+        vm.options = ButtonService.getOptions();
         vm.buttons = ButtonService.getAll();
-        vm.addButton = addButton;
+        vm.appendButton = appendButton;
         vm.toggleGroupRules = toggleGroupRules;
         vm.removeButton = removeButton;
 
 
-        function addButton(className, role) {
-            ButtonService.addButton(className, role);
+        function appendButton(modifier) {
+            ButtonService.addButton(modifier).addState('common');
         }
 
         function removeButton(index) {
@@ -674,77 +675,53 @@
     function buttonPreviewListController(ButtonService) {
         var vm = this;
 
+        vm.options = ButtonService.getOptions();
         vm.buttons = ButtonService.getAll();
-
     }
 
 })();
 (function() {
     'use strict';
 
-    angular.module('app')
-        .directive('classnameInput', classnameDirective);
+    angular
+        .module('app')
+        .directive('format', function() {
+            return {
+                require: '?ngModel',
+                link: link
+            };
 
-    classnameDirective.$inject = ['ButtonService'];
-
-    function classnameDirective(ButtonService) {
-        return  {
-            replace: true,
-            restrict: 'A',
-            scope: {
-                ngModel: '='
-            },
-            link: link
-        };
-
-        function link($scope, element, attrs) {
-            var role = attrs.role,
-                input;
+            function link(scope, elem, attrs, ctrl) {
+                if (!ctrl) return;
 
 
-            if (role == 'inherit') {
-                input = angular.element('<input type="text" name="class_mod">');
-                element.after(input);
-                element.css('display', 'none');
-                input.val($scope.ngModel.split('_')[1]);
-
-                input.on('blur keyup change', function() {
-                    //$scope.ngModel = $scope.ngModel.split('_')[0]+'_'+input.val();
-                    ButtonService.renameClass($scope.ngModel, $scope.ngModel.split('_')[0]+'_'+input.val());
-                    $scope.$apply();
+                ctrl.$parsers.unshift(function (viewValue) {
+                    viewValue = viewValue.replace(/[^-a-zA-Z0-9]+/g, "");
+                    console.log(viewValue);
+                    ctrl.$setViewValue(viewValue);
+                    ctrl.$render();
+                    return elem.val();
                 });
-            } else if (role == 'common') {
-                var oldClass = $scope.ngModel;
 
-                element.on('blur keyup change', function() {
-                    // TODO: Перенести в ButtonService
-                    var buttons = ButtonService.getAll(),
-                        count = buttons.length,
-                        i = 0;
-                    angular.forEach(ButtonService.getAll(), function(button) {
-                        var classMod = button.classname.split('_')[1];
-                        i++;
-                        if (!!classMod) {
-                            button.classname = $scope.ngModel+'_'+button.classname.split('_')[1];
-                            $scope.$apply();
-                        } else if (button.classname == oldClass) {
-                            button.classname = $scope.ngModel;
-                            $scope.$apply();
-                        }
+                /*ctrl.$formatters.unshift(function (a) {
+                    console.log('formatters');
+                    return ctrl.$modelValue + '_';
+                });*/
 
-                        if (count == i) {
-                            oldClass = $scope.ngModel;
-                        }
+
+
+                /*ctrl.$parsers.unshift(function (viewValue) {
+
+                    elem.priceFormat({
+                        prefix: '',
+                        centsSeparator: ',',
+                        thousandsSeparator: '.'
                     });
-                });
-            } else {
 
-                element.after(angular.element('<span>&:'+role+'</span>'));
-                element.css('display', 'none');
+                    return elem[0].value;
+                });*/
             }
-        }
-    }
-
+    });
 })();
 (function() {
     'use strict';
@@ -815,8 +792,11 @@
             },
 
             link : function(scope, element, attrs) {
-
+                var class_modifier = element.attr('data-modifier');
                 element.addClass('range-slider');
+                if (class_modifier) {
+                    element.addClass(class_modifier);
+                }
 
                 var currentMode = (attrs.ngModel == null) && (attrs.ngModelLow != null) && (attrs.ngModelHigh != null) ? modes.range : modes.single;
 
@@ -1099,18 +1079,23 @@
         };
 
 
-        function link($scope, element, attrs) {
+        function link($scope, element) {
 
             $scope.buttons = ButtonService.getAll();
+            $scope.options = ButtonService.getOptions();
 
             $scope.$watch('buttons', function() {
-                var styles = Styles.compile().getStyles();
-                onRender(styles);
+                onChange();
             }, true);
 
-            function onRender(styles) {
+            $scope.$watch('options', function() {
+                onChange();
+            }, true);
+
+            function onChange() {
+                var styles = Styles.compile().getStyles();
                 element.text(styles);
-                angular.element(document.getElementById('dynamic-css')).text(styles);
+                angular.element(document.getElementById('dynamic-css')).text(styles.replace(/[\.]([a-zA-Z])/g, '.g-preview-list .$1'));
             }
         }
     }
@@ -1134,20 +1119,17 @@
         function link($scope, element, attrs) {
             var groupName = attrs.toggleGroupRules;
 
-            if ($scope.button.groupRules.indexOf(groupName) >= 0) {
+            if ($scope.button[$scope.section].groupRules.indexOf(groupName) >= 0) {
                 element.addClass('is-selected');
             } else {
                 element.removeClass('is-selected');
             }
 
-            if ((groupName == 'size' || groupName == 'border')
-                && ($scope.button.role != 'common' && $scope.button.role != 'inherit')) {
-                element.remove();
-            } else {
-                element.bind('click', function() {
-                    element.toggleClass('is-selected');
-                });
-            }
+            element.bind('click', function() {
+                $scope.button[$scope.section].toggleGroup(groupName);
+                element.toggleClass('is-selected');
+                $scope.$apply();
+            });
         }
     }
 })();
@@ -1155,31 +1137,27 @@
     'use strict';
 
     angular.module('app')
-        .directive('togglePseudoClass', TogglePseudoClassDirective);
+        .directive('toggleSelector', ToggleSelectorDirective);
 
-    TogglePseudoClassDirective.$inject = ['ButtonService'];
 
-    function TogglePseudoClassDirective(ButtonService) {
+    function ToggleSelectorDirective() {
         return  {
             restrict: 'A',
-            link: link
+            link: link,
+            template:   '<a class="control-item" data-selector="hover" href="#">&:hover</a>'+
+                        '<a class="control-item" data-selector="active" href="#">&:active</a>'+
+                        '<a class="control-item" data-selector="focus" href="#">&:focus</a>'+
+                        '<a class="control-item" data-selector="disabled" href="#">&:disabled</a>'
         };
 
         function link($scope, element, attrs) {
-            var toggle,
-                selectors;
+            var toggle = element.find('a'),
+                activeSelectors = $scope.button.getActiveSelectors();
 
-            if ($scope.button.role != 'common' && $scope.button.role != 'inherit') {
-                element.remove();
-                return false;
-            }
-
-            toggle = element.find('a');
-            selectors = ButtonService.getSelectorsFor($scope.button.classname);
 
             angular.forEach(toggle, function(a) {
                 var $a = angular.element(a);
-                if (selectors.indexOf($a.attr('pseudo-class')) >= 0) {
+                if (activeSelectors.indexOf($a.attr('data-selector')) >= 0) {
                     $a.addClass('is-checked');
                 }
             });
@@ -1187,39 +1165,13 @@
 
             toggle.bind('click', function($ev) {
                 var el = angular.element(this);
-                var selector = el.attr('pseudo-class');
+                var selector = el.attr('data-selector');
 
-                ButtonService.toggleButtonSelector($scope.button.classname, selector);
+                $scope.button.toggleSelector(selector);
 
                 el.toggleClass('is-checked');
                 $scope.$apply();
             });
-
-
-            /*
-            var rule = attrs.toggleSilentRule;
-            var rules = {
-                'font-weight': 'bold',
-                'font-style': 'italic',
-                'text-transform': 'uppercase'
-            };
-            var ruleValue = rules[rule];
-
-            if ($scope.ngModel !== undefined && $scope.ngModel !== 'normal') {
-                element.addClass('is-checked');
-            } else {
-                element.removeClass('is-checked');
-            }
-
-            element.bind('click', function() {
-                element.toggleClass('is-checked');
-                if ($scope.ngModel !== ruleValue) {
-                    $scope.ngModel = ruleValue;
-                } else {
-                    $scope.ngModel = defaultRules[rule];
-                }
-                $scope.$apply();
-            });*/
         }
     }
 
@@ -1275,63 +1227,59 @@
 
     angular
         .module('app')
+        .factory('ButtonState', ButtonState)
         .factory('Button', Button)
         .factory('ButtonService', ButtonService);
 
-    Button.$inject = ['defaultRules', 'groupRulesDeps'];
+    ButtonState.$inject = ['defaultRules', 'groupRulesDeps'];
 
-    function Button(defaultRules, groupRulesDeps) {
+    function ButtonState(defaultRules, groupRulesDeps) {
 
-        function NewButton(className, role) {
-            this.classname = className || 'button';
-            this.role = role || 'common';
+        function State() {
             this.rules = {};
             this.groupRules = [];
         }
 
-        NewButton.prototype = {
+        State.prototype = {
             update: update,
-            addGroupRules: addGroupRules,
             toggleGroup: toggleGroup,
             addRulesByGroup: addRulesByGroup,
             deleteRulesByGroup: deleteRulesByGroup
         };
 
-        return NewButton;
+        return State;
 
         function update(json) {
-            for (var param in json) {
-                this[param] = json[param];
-            }
-        }
-
-        function addGroupRules(groupName) {
-            this.groupRules.push(groupName);
-        }
-
-        function toggleGroup(groupName) {
-            var index = this.groupRules.indexOf(groupName);
-
-            if (index !== -1) {
-                this.groupRules.splice(index, 1);
-                this.deleteRulesByGroup(groupName);
-            } else {
-                this.addGroupRules(groupName);
-                this.addRulesByGroup(groupName);
-            }
-        }
-
-        function addRulesByGroup(groupName) {
             var self = this;
-            angular.forEach(groupRulesDeps[groupName], function(rule) {
+            var prop;
+            for (prop in json) {
+                self[prop] = json[prop];
+            }
+        }
+
+        function toggleGroup(group) {
+            var index = this.groupRules.indexOf(group);
+
+            if (index >= 0) {
+                this.groupRules.splice(index, 1);
+                this.deleteRulesByGroup(group);
+            } else {
+                this.groupRules.push(group);
+                this.addRulesByGroup(group);
+            }
+        }
+
+        function addRulesByGroup(group) {
+            var self = this;
+            angular.forEach(groupRulesDeps[group], function(rule) {
                 self.rules[rule] = defaultRules[rule];
             });
         }
 
-        function deleteRulesByGroup(groupName) {
+        function deleteRulesByGroup(group) {
             var self = this;
-            angular.forEach(groupRulesDeps[groupName], function(rule) {
-                if (self.rules[rule] !== undefined) {
+            angular.forEach(groupRulesDeps[group], function(rule) {
+                if (self.rules[rule] !== 'undefined') {
                     delete self.rules[rule];
                 }
             });
@@ -1339,20 +1287,99 @@
     }
 
 
-    ButtonService.$inject = ['$http', '$filter', 'Button'];
+    Button.$inject = ['ButtonState'];
 
-    function ButtonService($http, $filter, Button) {
+    function Button(ButtonState) {
 
+        var selectors = ['hover', 'active', 'focus', 'disabled'];
+
+        function ButtonConstructor(modifier) {
+            this.modifier = modifier || null;
+            this.common = null;
+
+            for (var i = 0; i < selectors.length; i++) {
+                this[selectors[i]] = null;
+            }
+        }
+
+        ButtonConstructor.prototype = {
+            addState: addState,
+            cleanState: cleanState,
+            toggleSelector: toggleSelector,
+            getSelectors: getSelectors,
+            getActiveSelectors: getActiveSelectors,
+            getSections: getSections
+        };
+
+        return ButtonConstructor;
+
+        function addState(state) {
+            if (this.hasOwnProperty(state)) {
+                this[state] = new ButtonState();
+                return this[state];
+            }
+            return false;
+        }
+
+        function cleanState(state) {
+            if (this.hasOwnProperty(state)) {
+                this[state] = null;
+                return true;
+            }
+            return false;
+        }
+
+        function toggleSelector(selector) {
+            if (selectors.indexOf(selector) >= 0) {
+                if (this[selector] === null) {
+                    return this.addState(selector);
+                } else {
+                    return this.cleanState(selector);
+                }
+            }
+        }
+
+        function getSelectors() {
+            return selectors;
+        }
+
+        function getActiveSelectors(sArr) {
+            var s = sArr || selectors,
+                active = [];
+            for (var i = 0; i < s.length; i++) {
+                if (this[s[i]] !== null) {
+                    active.push(s[i]);
+                }
+            }
+            return active;
+        }
+
+        function getSections() {
+            var s = selectors.slice();
+            s.unshift('common');
+            return this.getActiveSelectors(s);
+        }
+    }
+
+
+    ButtonService.$inject = ['$http', 'Button'];
+
+    function ButtonService($http, Button) {
+
+        var options = {
+            className: 'button',
+            separator: '_'
+        };
         var buttons = [];
 
         return {
             getAll: getAll,
+            getOptions: getOptions,
             addButton: addButton,
             setSilentRule: setSilentRule,
             toggleButtonSelector: toggleButtonSelector,
             loadJSON: loadJSON,
-            renameClass: renameClass,
-            getSelectorsFor: getSelectorsFor
+            renameClass: renameClass
         };
 
 
@@ -1360,35 +1387,31 @@
             return buttons;
         }
 
+        function getOptions() {
+            return options;
+        }
+
         function loadJSON(param) {
             $http.get('data/' + param + '.json').success(function(json) {
-                angular.forEach(json.button, function(btn) {
-                    addButton(btn.classname, btn.role).update(btn);
-                });
+                for(var className in json) {
+                    options.className = className;
+                    angular.forEach(json[className], function(btn, i) {
+                        var _button = addButton();
+                        for (var state in btn) {
+                            _button.modifier = btn.modifier;
+                            if (state !== 'modifier') {
+                                _button.addState(state);
+                                angular.extend(_button[state], btn[state]);
+                            }
+                        }
+                    });
+                }
             });
         }
 
-        function addButton(className, role) {
-            var button = new Button(className, role),
-                count = buttons.length,
-                isAdded = false,
-                i = 0;
-
-            angular.forEach(buttons, function(btn, index) {
-                i++;
-                if (btn.classname == className && !isAdded) {
-                    buttons.splice(index+1, 0, button);
-                    isAdded = true;
-                }
-                if (i == count && !isAdded) {
-                    buttons.push(button);
-                }
-            });
-
-            if (count == 0) {
-                buttons.push(button);
-            }
-
+        function addButton(modifier) {
+            var button = new Button(modifier);
+            buttons.push(button);
             return button;
         }
 
@@ -1431,16 +1454,6 @@
             });
         }
 
-        function getSelectorsFor(className) {
-            var selectors = [];
-            angular.forEach(buttons, function(btn) {
-                if (btn.classname == className && btn.role != 'common') {
-                    selectors.push(btn.role);
-                }
-            });
-            return selectors;
-        }
-
     }
 })();
 (function() {
@@ -1456,7 +1469,10 @@
 
         var tab = '    ',
             units = 'px',
-            styles;
+            styles = '',
+            separator = '_',
+            _buttons = [],
+            _mainButtonRules = {};
 
         return {
             compile: compile,
@@ -1469,28 +1485,49 @@
          * @returns {Styles.compile}
          */
         function compile() {
-            var buttons = ButtonService.getAll();
+            var options = ButtonService.getOptions();
+            var buttonClass = options.className;
 
-            // Clean old styles
-            styles = '';
+            _buttons = ButtonService.getAll();
 
-            angular.forEach(buttons, function(button) {
-                var renderGroup = new Render(button.rules, button.role);
+            if (!!_buttons[0]) {
+                _mainButtonRules = {};
 
-                openSelector(button.classname, button.role);
+                separator = options.separator;
 
-                if (button.role == 'common') {
-                    setCommon();
-                }
+                // Clean old styles
+                styles = '/* Button Component styles */\n';
 
-                angular.forEach(groupRulesDeps, function(styles, group) {
-                    renderGroup[group]();
+                angular.forEach(_buttons, function(button) {
+                    var buttonCopy = angular.copy(button);
+                    for (var section in buttonCopy) {
+                        if (buttonCopy.hasOwnProperty(section) && section != 'modifier' && !!button[section]) {
+                            _compileSilentBtn(button, section, buttonClass);
+                            _mainButtonRules = _buttons[0].common.rules;
+                        }
+                    }
                 });
-
-                closeSelector();
-            });
+            }
 
             return this;
+        }
+
+        function _compileSilentBtn(button, section, buttonClass) {
+            var renderGroup = new Render(button[section].rules, section);
+            var className = !!button.modifier ? buttonClass+separator+button.modifier : buttonClass;
+            var hasBorder = button[section].groupRules.indexOf('border') >= 0;
+
+            openSelector(className, section);
+
+            if (!button.modifier && section == 'common') {
+                setCommon(hasBorder);
+            }
+
+            angular.forEach(button[section].groupRules, function(group) {
+                renderGroup[group]();
+            });
+
+            closeSelector();
         }
 
         /**
@@ -1504,7 +1541,7 @@
         /**
          * Set common styles for general Button
          */
-        function setCommon() {
+        function setCommon(hasBorder) {
             styles += tab + 'box-sizing: border-box;\n';
             styles += tab + 'display: inline-block;\n';
             styles += tab + 'cursor: pointer;\n';
@@ -1512,15 +1549,24 @@
             styles += tab + 'text-decoration: none;\n';
             styles += tab + '-webkit-transition: all 0.25s;\n';
             styles += tab + 'transition: all 0.25s;\n';
+            styles += tab + 'font-family: "Open Sans", sans-serif;\n';
+
+            if (!hasBorder) {
+                styles += tab + 'border: none;\n';
+            }
         }
 
-        function openSelector(className, role) {
-            var classNameRender = (role == 'common' || role == 'inherit') ? className : className+':'+role;
+        function openSelector(className, section) {
+            var classNameRender = (section == 'common') ? className : className+':'+section;
             styles += '.' + classNameRender + ' {\n';
         }
 
         function closeSelector() {
             styles += '}\n';
+        }
+
+        function isChanged(rules, key) {
+            return rules[key] !== _mainButtonRules[key];
         }
 
 
@@ -1534,27 +1580,32 @@
             var render = {};
 
             render.size = function() {
-                if (rules['height'] !== undefined) {
-                    var line_height = (rules['border'] !== undefined) ? rules['height'] - rules['border'] * 2 : rules['height'];
+                if (!!rules['height'] && isChanged(rules, 'height')) {
+                    var line_height = (!!rules['border']) ? rules['height'] - rules['border'] * 2 : rules['height'];
 
-                    styles += tab + 'height: ' + rules.height + units + ';\n';
+                    styles += tab + 'height: ' + rules['height'] + units + ';\n';
                     styles += tab + 'line-height: ' + line_height + units + ';\n';
 
-                    if (rules['padding'] !== undefined) {
-                        rules['padding-right'] = rules['padding-left'] = rules['padding'];
-                    }
+
+                }
+                if (!!rules['padding'] && isChanged(rules, 'padding')) {
+                    rules['padding-right'] = rules['padding-left'] = rules['padding'];
                     styles += tab + 'padding: ' + rules['padding-top'] + units + ' ' + rules['padding-right'] + units + ' ' + rules['padding-bottom'] + units + ' ' + rules['padding-left'] + units + ';\n';
                 }
             };
 
             render.fill = function() {
-                if (rules['background'] !== undefined) {
+                if (!!rules['background'] && rules['background'] !== _mainButtonRules['background']) {
                     styles += tab + 'background: ' + rules['background'] + ';\n';
                 }
             };
 
             render.border = function() {
-                if (rules['border'] !== undefined && rules['border'] != 0 ) {
+                if (!!rules['border']
+                    && rules['border'] != 0
+                    && (rules['border'] !== _mainButtonRules['border']
+                        || rules['border-color'] !== _mainButtonRules['border-color']))
+                {
                     styles += tab + 'border: ' + rules['border'] + units + ' solid ' + rules['border-color'] + ';\n';
                 } else if (role == 'common') {
                     styles += tab + 'border: none;\n';
@@ -1562,26 +1613,40 @@
             };
 
             render.font = function() {
-                if (rules['font-size'] !== undefined && rules['color'] !== undefined ) {
+                if (!!rules['font-size'] && rules['font-size'] !== _mainButtonRules['font-size']) {
                     styles += tab + 'font-size: ' + rules['font-size'] + units + ';\n';
+                }
+                if (!!rules['color'] && rules['color'] !== _mainButtonRules['color']) {
                     styles += tab + 'color: ' + rules['color'] + ';\n';
                 }
-                if (rules['font-weight'] !== undefined) {
+                if (!!rules['font-weight'] && rules['font-weight'] !== _mainButtonRules['font-weight']) {
                     styles += tab + 'font-weight: ' + rules['font-weight'] + ';\n';
                 }
-                if (rules['font-style'] !== undefined) {
+                if (!!rules['font-style'] && rules['font-style'] !== _mainButtonRules['font-style']) {
                     styles += tab + 'font-style: ' + rules['font-style'] + ';\n';
                 }
-                if (rules['text-transform'] !== undefined) {
+                if (!!rules['text-transform'] && rules['text-transform'] !== _mainButtonRules['text-transform']) {
                     styles += tab + 'text-transform: ' + rules['text-transform'] + ';\n';
                 }
             };
             render.radius = function() {
-                if (rules['border-radius'] !== undefined) {
+                if (!!rules['border-radius'] && rules['border-radius'] !== _mainButtonRules['border-radius']) {
                     styles += tab + 'border-radius: ' + rules['border-radius'] + units + ';\n';
                 }
             };
-            render.shadow = function() {};
+            render.shadow = function() {
+                if (!!rules['box-shadow-color'] && !!rules['box-shadow-blur'])
+                {
+                    var old_box_shadow = _mainButtonRules['box-shadow-x'] + units + ' ' + _mainButtonRules['box-shadow-y'] + units + ' ' + _mainButtonRules['box-shadow-blur'] + units + ' ' + _mainButtonRules['box-shadow-color'];
+                    var box_shadow = rules['box-shadow-x'] + units + ' ' + rules['box-shadow-y'] + units + ' ' + rules['box-shadow-blur'] + units + ' ' + rules['box-shadow-color'];
+
+                    if (box_shadow !== old_box_shadow) {
+                        styles += tab + '-webkit-box-shadow: ' + box_shadow + ';\n';
+                        styles += tab + '-moz-box-shadow: ' + box_shadow + ';\n';
+                        styles += tab + 'box-shadow: ' + box_shadow + ';\n';
+                    }
+                }
+            };
 
             return render;
         }
