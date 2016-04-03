@@ -1,32 +1,88 @@
 {
   "button": [
     {
-      "classname": "button",
-      "role": "common",
-      "rules": {
-        "background": "#f95f7c",
-        "height": 50,
-        "line-height": 50,
-        "padding": 30,
-        "padding-left": 30,
-        "padding-right": 30,
-        "padding-top": 0,
-        "padding-bottom": 0,
-        "font-size": 16,
-        "color": "#fff",
-        "font-weight": "normal",
-        "text-transform": "uppercase",
-        "border-radius": 5
+      "modifier": null,
+      "common": {
+        "rules": {
+          "background": "#f95f7c",
+          "height": 50,
+          "line-height": 50,
+          "padding": 30,
+          "padding-left": 30,
+          "padding-right": 30,
+          "padding-top": 0,
+          "padding-bottom": 0,
+          "font-size": 16,
+          "color": "#ffffff",
+          "font-weight": "normal",
+          "border-radius": 5
+        },
+        "groupRules": ["fill", "size", "font", "radius"]
       },
-      "groupRules": ["fill", "size", "font", "radius"]
+      "hover": {
+        "rules": {
+          "background": "#f14062"
+        },
+        "groupRules": ["fill"]
+      },
+      "disabled": {
+        "rules": {
+          "background": "#cbd0d6"
+        },
+        "groupRules": ["fill"]
+      }
     },
+
     {
-      "classname": "button",
-      "role": "hover",
-      "rules": {
-        "background": "#f14062"
+      "modifier": "blue",
+      "common": {
+        "rules": {
+          "background": "#699aff"
+        },
+        "groupRules": ["fill"]
       },
-      "groupRules": ["fill"]
+      "hover": {
+        "rules": {
+          "background": "#5a8aec"
+        },
+        "groupRules": ["fill"]
+      }
+    },
+
+    {
+      "modifier": "green",
+      "common": {
+        "rules": {
+          "background": "#2acd67"
+        },
+        "groupRules": ["fill"]
+      },
+      "hover": {
+        "rules": {
+          "background": "#17c057"
+        },
+        "groupRules": ["fill"]
+      }
+    },
+
+    {
+      "modifier": "small",
+      "common": {
+        "rules": {
+          "background": "#f95f7c",
+          "height": 30,
+          "line-height": 30,
+          "padding": 15,
+          "padding-left": 15,
+          "padding-right": 15,
+          "padding-top": 0,
+          "padding-bottom": 0,
+          "font-size": 13,
+          "font-weight": "bold",
+          "text-transform": "uppercase"
+        },
+        "groupRules": ["fill", "size", "font"]
+      }
     }
   ]
 }

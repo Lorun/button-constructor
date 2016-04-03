@@ -13,14 +13,15 @@
     function buttonListController(ButtonService) {
         var vm = this;
 
+        vm.options = ButtonService.getOptions();
         vm.buttons = ButtonService.getAll();
-        vm.addButton = addButton;
+        vm.appendButton = appendButton;
         vm.toggleGroupRules = toggleGroupRules;
         vm.removeButton = removeButton;
 
 
-        function addButton(className, role) {
-            ButtonService.addButton(className, role);
+        function appendButton(modifier) {
+            ButtonService.addButton(modifier).addState('common');
         }
 
         function removeButton(index) {

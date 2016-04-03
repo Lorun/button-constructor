@@ -1,0 +1,25 @@
+
+<div class="section-class">
+    <span class="class-name">
+        <span class="class-name-separator">&{{$ctrl.options.separator}}</span>
+        <input type="text" ng-pattern="word" format ng-model="$ctrl.options.className" ng-if="button.modifier == null">
+        <input type="text" ng-model="button.modifier" format ng-if="button.modifier !== null" autofocus>
+    </span>
+
+    <ul class="builder-rulesList">
+        <li toggle-group-rules="size">Size</li>
+        <li toggle-group-rules="fill">Fill</li>
+        <li toggle-group-rules="font">Font</li>
+        <li toggle-group-rules="border">Border</li>
+        <li toggle-group-rules="radius">Radius</li>
+        <li toggle-group-rules="shadow">Shadow</li>
+    </ul>
+</div>
+<div class="section-rules">
+    <div class="builder-rule" ng-repeat="groupTpl in button[section].groupRules" ng-include="groupTpl+'.html'"></div>
+</div>
+<div class="section-control" toggle-selector>
+    <a class="control-item" data-selector="hover" href="#">&:hover</a>
+    <a class="control-item" data-selector="active" href="#">&:active</a>
+    <a class="control-item" data-selector="disabled" href="#">&:disabled</a>
+</div>

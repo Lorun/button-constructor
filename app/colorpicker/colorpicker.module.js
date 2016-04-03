@@ -274,8 +274,8 @@
                         inline = angular.isDefined(attrs.colorpickerInline) ? attrs.colorpickerInline : false,
                         fixedPosition = angular.isDefined(attrs.colorpickerFixedPosition) ? attrs.colorpickerFixedPosition : false,
                         target = angular.isDefined(attrs.colorpickerParent) ? elem.parent() : angular.element(document.body),
-                        withInput = angular.isDefined(attrs.colorpickerWithInput) ? attrs.colorpickerWithInput : false,
-                        componentSize = angular.isDefined(attrs.colorpickerSize) ? attrs.colorpickerSize : 100,
+                        withInput = angular.isDefined(attrs.colorpickerWithInput) ? attrs.colorpickerWithInput : true,
+                        componentSize = angular.isDefined(attrs.colorpickerSize) ? attrs.colorpickerSize : 160,
                         componentSizePx = componentSize + 'px',
                         inputTemplate = withInput ? '<input type="text" name="colorpicker-input" spellcheck="false">' : '',
                         closeButton = !inline ? '<button type="button" class="close close-colorpicker">&times;</button>' : '',
@@ -483,7 +483,7 @@
                             };
                         } else if (position === 'bottom') {
                             positionValue = {
-                                'top': positionOffset.top + elem[0].offsetHeight + 2,
+                                'top': positionOffset.top + elem[0].offsetHeight + 10,
                                 'left': positionOffset.left
                             };
                         } else if (position === 'left') {

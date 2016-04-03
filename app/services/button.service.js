@@ -3,63 +3,59 @@
 
     angular
         .module('app')
+        .factory('ButtonState', ButtonState)
         .factory('Button', Button)
         .factory('ButtonService', ButtonService);
 
-    Button.$inject = ['defaultRules', 'groupRulesDeps'];
+    ButtonState.$inject = ['defaultRules', 'groupRulesDeps'];
 
-    function Button(defaultRules, groupRulesDeps) {
+    function ButtonState(defaultRules, groupRulesDeps) {
 
-        function NewButton(className, role) {
-            this.classname = className || 'button';
-            this.role = role || 'common';
+        function State() {
             this.rules = {};
             this.groupRules = [];
         }
 
-        NewButton.prototype = {
+        State.prototype = {
             update: update,
-            addGroupRules: addGroupRules,
             toggleGroup: toggleGroup,
             addRulesByGroup: addRulesByGroup,
             deleteRulesByGroup: deleteRulesByGroup
         };
 
-        return NewButton;
+        return State;
 
         function update(json) {
-            for (var param in json) {
-                this[param] = json[param];
-            }
-        }
-
-        function addGroupRules(groupName) {
-            this.groupRules.push(groupName);
-        }
-
-        function toggleGroup(groupName) {
-            var index = this.groupRules.indexOf(groupName);
-
-            if (index !== -1) {
-                this.groupRules.splice(index, 1);
-                this.deleteRulesByGroup(groupName);
-            } else {
-                this.addGroupRules(groupName);
-                this.addRulesByGroup(groupName);
-            }
-        }
-
-        function addRulesByGroup(groupName) {
             var self = this;
-            angular.forEach(groupRulesDeps[groupName], function(rule) {
+            var prop;
+            for (prop in json) {
+                self[prop] = json[prop];
+            }
+        }
+
+        function toggleGroup(group) {
+            var index = this.groupRules.indexOf(group);
+
+            if (index >= 0) {
+                this.groupRules.splice(index, 1);
+                this.deleteRulesByGroup(group);
+            } else {
+                this.groupRules.push(group);
+                this.addRulesByGroup(group);
+            }
+        }
+
+        function addRulesByGroup(group) {
+            var self = this;
+            angular.forEach(groupRulesDeps[group], function(rule) {
                 self.rules[rule] = defaultRules[rule];
             });
         }
 
-        function deleteRulesByGroup(groupName) {
+        function deleteRulesByGroup(group) {
             var self = this;
-            angular.forEach(groupRulesDeps[groupName], function(rule) {
-                if (self.rules[rule] !== undefined) {
+            angular.forEach(groupRulesDeps[group], function(rule) {
+                if (self.rules[rule] !== 'undefined') {
                     delete self.rules[rule];
                 }
             });
@@ -67,20 +63,99 @@
     }
 
 
-    ButtonService.$inject = ['$http', '$filter', 'Button'];
+    Button.$inject = ['ButtonState'];
 
-    function ButtonService($http, $filter, Button) {
+    function Button(ButtonState) {
 
+        var selectors = ['hover', 'active', 'focus', 'disabled'];
+
+        function ButtonConstructor(modifier) {
+            this.modifier = modifier || null;
+            this.common = null;
+
+            for (var i = 0; i < selectors.length; i++) {
+                this[selectors[i]] = null;
+            }
+        }
+
+        ButtonConstructor.prototype = {
+            addState: addState,
+            cleanState: cleanState,
+            toggleSelector: toggleSelector,
+            getSelectors: getSelectors,
+            getActiveSelectors: getActiveSelectors,
+            getSections: getSections
+        };
+
+        return ButtonConstructor;
+
+        function addState(state) {
+            if (this.hasOwnProperty(state)) {
+                this[state] = new ButtonState();
+                return this[state];
+            }
+            return false;
+        }
+
+        function cleanState(state) {
+            if (this.hasOwnProperty(state)) {
+                this[state] = null;
+                return true;
+            }
+            return false;
+        }
+
+        function toggleSelector(selector) {
+            if (selectors.indexOf(selector) >= 0) {
+                if (this[selector] === null) {
+                    return this.addState(selector);
+                } else {
+                    return this.cleanState(selector);
+                }
+            }
+        }
+
+        function getSelectors() {
+            return selectors;
+        }
+
+        function getActiveSelectors(sArr) {
+            var s = sArr || selectors,
+                active = [];
+            for (var i = 0; i < s.length; i++) {
+                if (this[s[i]] !== null) {
+                    active.push(s[i]);
+                }
+            }
+            return active;
+        }
+
+        function getSections() {
+            var s = selectors.slice();
+            s.unshift('common');
+            return this.getActiveSelectors(s);
+        }
+    }
+
+
+    ButtonService.$inject = ['$http', 'Button'];
+
+    function ButtonService($http, Button) {
+
+        var options = {
+            className: 'button',
+            separator: '_'
+        };
         var buttons = [];
 
         return {
             getAll: getAll,
+            getOptions: getOptions,
             addButton: addButton,
             setSilentRule: setSilentRule,
             toggleButtonSelector: toggleButtonSelector,
             loadJSON: loadJSON,
-            renameClass: renameClass,
-            getSelectorsFor: getSelectorsFor
+            renameClass: renameClass
         };
 
 
@@ -88,35 +163,31 @@
             return buttons;
         }
 
+        function getOptions() {
+            return options;
+        }
+
         function loadJSON(param) {
             $http.get('data/' + param + '.json').success(function(json) {
-                angular.forEach(json.button, function(btn) {
-                    addButton(btn.classname, btn.role).update(btn);
-                });
+                for(var className in json) {
+                    options.className = className;
+                    angular.forEach(json[className], function(btn, i) {
+                        var _button = addButton();
+                        for (var state in btn) {
+                            _button.modifier = btn.modifier;
+                            if (state !== 'modifier') {
+                                _button.addState(state);
+                                angular.extend(_button[state], btn[state]);
+                            }
+                        }
+                    });
+                }
             });
         }
 
-        function addButton(className, role) {
-            var button = new Button(className, role),
-                count = buttons.length,
-                isAdded = false,
-                i = 0;
-
-            angular.forEach(buttons, function(btn, index) {
-                i++;
-                if (btn.classname == className && !isAdded) {
-                    buttons.splice(index+1, 0, button);
-                    isAdded = true;
-                }
-                if (i == count && !isAdded) {
-                    buttons.push(button);
-                }
-            });
-
-            if (count == 0) {
-                buttons.push(button);
-            }
-
+        function addButton(modifier) {
+            var button = new Button(modifier);
+            buttons.push(button);
             return button;
         }
 
@@ -157,16 +228,6 @@
                     btn.classname = newClass;
                 }
             });
-        }
-
-        function getSelectorsFor(className) {
-            var selectors = [];
-            angular.forEach(buttons, function(btn) {
-                if (btn.classname == className && btn.role != 'common') {
-                    selectors.push(btn.role);
-                }
-            });
-            return selectors;
         }
 
     }

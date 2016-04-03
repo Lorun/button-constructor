@@ -1,30 +1,11 @@
 
-<div class="builder-section builder-section_{{button.role}}" ng-repeat="button in $ctrl.buttons">
+<div ng-repeat="button in $ctrl.buttons" class="builder-buttonFull" ng-class="button.modifier !== null ? 'builder-buttonFull_modifier' : ''">
 
-    <div class="section-class">
-        <span class="class-name">
-            <input type="text" classname-input role="{{button.role}}" ng-model="button.classname">
-        </span>
-        <ul class="builder-rulesList">
-            <li ng-click="$ctrl.toggleGroupRules('size', $index)" toggle-group-rules="size">Size</li>
-            <li ng-click="$ctrl.toggleGroupRules('fill', $index)" toggle-group-rules="fill">Fill</li>
-            <li ng-click="$ctrl.toggleGroupRules('font', $index)" toggle-group-rules="font">Font</li>
-            <li ng-click="$ctrl.toggleGroupRules('border', $index)" toggle-group-rules="border">Border</li>
-            <li ng-click="$ctrl.toggleGroupRules('radius', $index)" toggle-group-rules="radius">Radius</li>
-            <li ng-click="$ctrl.toggleGroupRules('shadow', $index)" toggle-group-rules="shadow">Shadow</li>
-        </ul>
-    </div>
-    <div class="section-rules">
-        <div class="builder-rule" ng-repeat="gr in button.groupRules" ng-include="gr+'.html'"></div>
-    </div>
-    <div class="section-control" toggle-pseudo-class>
-        <a class="control-item" pseudo-class="hover" href="#">&:hover</a>
-        <a class="control-item" pseudo-class="active" href="#">&:active</a>
-        <a class="control-item" pseudo-class="disabled" href="#">&:disabled</a>
-    </div>
+    <div ng-repeat="section in button.getSections()"
+         class="builder-section{{section != 'common' ? ' builder-section_selector' : ''}}"
+         ng-include="'app/components/buttons/buttonSection.' + (section == 'common' ? 'common' : 'selector') + '.html'"></div>
 </div>
 
 <div class="builder-controls">
-    <button ng-click="$ctrl.addButton($ctrl.buttons[0].classname+'_size', 'inherit')" class="b-button">Add button</button>
-    <button ng-click="$ctrl.removeButton(1)" class="b-button">Remove button</button>
+    <button ng-click="$ctrl.appendButton('size')" class="b-button">Add button</button>
 </div>
