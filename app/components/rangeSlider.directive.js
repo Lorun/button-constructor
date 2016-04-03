@@ -67,8 +67,11 @@
             },
 
             link : function(scope, element, attrs) {
-
+                var class_modifier = element.attr('data-modifier');
                 element.addClass('range-slider');
+                if (class_modifier) {
+                    element.addClass(class_modifier);
+                }
 
                 var currentMode = (attrs.ngModel == null) && (attrs.ngModelLow != null) && (attrs.ngModelHigh != null) ? modes.range : modes.single;
 

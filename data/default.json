@@ -26,6 +26,16 @@
         },
         "groupRules": ["fill"]
       }
+    },
+
+    {
+      "modifier": "blue",
+      "common": {
+        "rules": {
+          "background": "#f95f7c"
+        },
+        "groupRules": ["fill"]
+      }
     }
   ]
 }

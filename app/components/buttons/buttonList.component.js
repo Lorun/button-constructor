@@ -18,7 +18,6 @@
         vm.appendButton = appendButton;
         vm.toggleGroupRules = toggleGroupRules;
         vm.removeButton = removeButton;
-        vm.getSections = getSections;
 
 
         function appendButton(modifier) {
@@ -31,19 +30,6 @@
 
         function toggleGroupRules(groupName, index) {
             vm.buttons[index].toggleGroup(groupName);
-        }
-
-
-        function getSections(btn) {
-            var sections = [],
-                copy = angular.copy(btn);
-
-            for (var prop in copy) {
-                if (copy.hasOwnProperty(prop) && prop != 'modifier' && copy[prop] != null) {
-                    sections.push(prop);
-                }
-            }
-            return sections;
         }
     }
 

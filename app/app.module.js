@@ -12,7 +12,7 @@
             'padding-top'       : 0,
             'padding-bottom'    : 0,
             'background'        : '#4980b7',
-            'border-color'      : '#2f4255',
+            'border-color'      : '#3171b1',
             'border'            : 1,
             'font-size'         : 14,
             'color'             : '#fff',

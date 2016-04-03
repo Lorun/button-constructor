@@ -31,7 +31,7 @@
             function onChange() {
                 var styles = Styles.compile().getStyles();
                 element.text(styles);
-                angular.element(document.getElementById('dynamic-css')).text(styles);
+                angular.element(document.getElementById('dynamic-css')).text(styles.replace(/[\.]([a-zA-Z])/g, '.g-preview-list .$1'));
             }
         }
     }

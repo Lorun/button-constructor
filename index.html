@@ -8,23 +8,21 @@
     <style id="dynamic-css" type="text/css"></style>
 
 </head>
-<body>
-<div class="builder" ng-init="previewBg = '#fff'" style="background-color: {{previewBg}}">
+<body class="g-css" ng-init="previewBg = '#fff'" style="background-color:{{previewBg}}">
+<div class="g-css-body">
 
-    <div class="builder-preview">
-        <span class="preview-colorpicker" colorpicker ng-model="previewBg"><span ng-include="'/assets/images/icon-paint-bucket.svg'"></span></span>
-        <button-preview-list></button-preview-list>
+    <div class="__builder-preview">
+        <span class="__preview-colorpicker" colorpicker ng-model="previewBg"><span ng-include="'/assets/images/icon-paint-bucket.svg'"></span></span>
+        <button-preview-list class="g-preview-list"></button-preview-list>
 
-
-        <br><br>
-        <pre class="preview-code" render-directive="preview"></pre>
-
+        <pre class="__preview-code" render-directive="preview"></pre>
     </div>
 
     <div class="builder-dashboard">
-
         <button-list></button-list>
-
+        <div class="builder-controls">
+            <button ng-click="$ctrl.appendButton('size')" class="b-button">Add button</button>
+        </div>
     </div>
 </div>
 
@@ -35,11 +33,11 @@
     <span class="rule-label">Size</span>
     <div class="rule-input">
         <input type="text" ng-model="button[section].rules.height" value="">
-        <span class="input-label">Height</span>
+        <span class="rule-value-label">Height</span>
     </div>
     <div class="rule-input">
         <input type="text" ng-model="button[section].rules.padding" value="">
-        <span class="input-label">Padding</span>
+        <span class="rule-value-label">Padding</span>
     </div>
 </script>
 
@@ -55,7 +53,7 @@
     <span class="rule-color" colorpicker ng-model="button[section].rules.color" style="background: {{button[section].rules.color}}"></span>
     <div class="rule-input">
         <input type="text" name="font-size" value="" ng-model="button[section].rules['font-size']">
-        <span class="input-label">Size</span>
+        <span class="rule-value-label">Size</span>
     </div>
     <div class="rule-buttons">
         <a class="rule-button rule-button_bold" href="javascript:void(0)" toggle-silent-rule="font-weight" ng-model="button[section].rules['font-weight']">B</a>
@@ -70,7 +68,7 @@
     <span class="rule-color" colorpicker ng-model="button[section].rules['border-color']" style="background: {{button[section].rules['border-color']}}"></span>
     <div class="rule-input">
         <input type="text" ng-model="button[section].rules['border']" value="">
-        <span class="input-label">Thuckness</span>
+        <span class="rule-value-label">Thuckness</span>
     </div>
 </script>
 
@@ -82,6 +80,23 @@
     </div>
     <div class="rule-range">
         <div range-slider floor="0" ceiling="50" step="1" highlight="left" ng-model="button[section].rules['border-radius']"></div>
+    </div>
+</script>
+
+<!-- SHADOW -->
+<script type="text/ng-template" id="shadow.html">
+    <span class="rule-label">Shadow</span>
+    <span class="rule-color" colorpicker="rgba" ng-model="button[section].rules['box-shadow-color']" style="background: {{button[section].rules['box-shadow-color']}}"></span>
+    <div class="rule-input">
+        <input type="text" ng-model="button[section].rules['box-shadow-y']" value="">
+        <span class="rule-value-label">Offset Y</span>
+    </div>
+    <div class="rule-input">
+        <input type="text" ng-model="button[section].rules['box-shadow-blur']" value="">
+        <span class="rule-value-label">Blur</span>
+    </div>
+    <div class="rule-range">
+        <div range-slider floor="0" ceiling="50" step="1" highlight="left" ng-model="button[section].rules['box-shadow-blur']"></div>
     </div>
 </script>
 
@@ -98,6 +113,7 @@
 <script src="app/components/toggleSilentRule.directive.js"></script>
 <script src="app/components/toggleSelector.directive.js"></script>
 <script src="app/components/rangeSlider.directive.js"></script>
+<script src="app/components/format.directive.js"></script>
 <script src="app/colorpicker/colorpicker.module.js"></script>
 
 <!-- Production -->

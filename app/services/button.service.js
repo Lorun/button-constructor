@@ -83,7 +83,8 @@
             cleanState: cleanState,
             toggleSelector: toggleSelector,
             getSelectors: getSelectors,
-            getActiveSelectors: getActiveSelectors
+            getActiveSelectors: getActiveSelectors,
+            getSections: getSections
         };
 
         return ButtonConstructor;
@@ -118,14 +119,21 @@
             return selectors;
         }
 
-        function getActiveSelectors() {
-            var active = [];
-            for (var i = 0; i < selectors.length; i++) {
-                if (this[selectors[i]] !== null) {
-                    active.push(selectors[i]);
+        function getActiveSelectors(sArr) {
+            var s = sArr || selectors,
+                active = [];
+            for (var i = 0; i < s.length; i++) {
+                if (this[s[i]] !== null) {
+                    active.push(s[i]);
                 }
             }
             return active;
+        }
+
+        function getSections() {
+            var s = selectors.slice();
+            s.unshift('common');
+            return this.getActiveSelectors(s);
         }
     }
 
@@ -160,15 +168,21 @@
         }
 
         function loadJSON(param) {
-
-            addButton().addState('common').toggleGroup('size');
-            buttons[0].addState('hover').toggleGroup('fill');
-
-            /*$http.get('data/' + param + '.json').success(function(json) {
-                angular.forEach(json.button, function(btn) {
-                    addButton(btn.classname, btn.role).update(btn);
-                });
-            });*/
+            $http.get('data/' + param + '.json').success(function(json) {
+                for(var className in json) {
+                    options.className = className;
+                    angular.forEach(json[className], function(btn, i) {
+                        var _button = addButton();
+                        for (var state in btn) {
+                            _button.modifier = btn.modifier;
+                            if (state !== 'modifier') {
+                                _button.addState(state);
+                                angular.extend(_button[state], btn[state]);
+                            }
+                        }
+                    });
+                }
+            });
         }
 
         function addButton(modifier) {

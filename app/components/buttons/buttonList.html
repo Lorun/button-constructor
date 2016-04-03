@@ -1,11 +1,7 @@
 
-<div class="builder-buttonFull" ng-repeat="button in $ctrl.buttons">
+<div ng-repeat="button in $ctrl.buttons" class="builder-buttonFull" ng-class="button.modifier !== null ? 'builder-buttonFull_modifier' : ''">
 
-    <div ng-repeat="section in $ctrl.getSections(button)"
+    <div ng-repeat="section in button.getSections()"
          class="builder-section{{section != 'common' ? ' builder-section_selector' : ''}}"
          ng-include="'app/components/buttons/buttonSection.' + (section == 'common' ? 'common' : 'selector') + '.html'"></div>
-</div>
-
-<div class="builder-controls">
-    <button ng-click="$ctrl.appendButton('size')" class="b-button">Add button</button>
 </div>

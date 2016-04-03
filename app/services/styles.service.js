@@ -156,7 +156,14 @@
                     styles += tab + 'border-radius: ' + rules['border-radius'] + units + ';\n';
                 }
             };
-            render.shadow = function() {};
+            render.shadow = function() {
+                if (!!rules['box-shadow-color'] && !!rules['box-shadow-blur']) {
+                    var box_shadow = rules['box-shadow-x'] + units + ' ' + rules['box-shadow-y'] + units + ' ' + rules['box-shadow-blur'] + units + ' ' + rules['box-shadow-color']
+                    styles += tab + '-webkit-box-shadow: ' + box_shadow + ';\n';
+                    styles += tab + '-moz-box-shadow: ' + box_shadow + ';\n';
+                    styles += tab + 'box-shadow: ' + box_shadow + ';\n';
+                }
+            };
 
             return render;
         }
