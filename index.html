@@ -8,14 +8,36 @@
     <style id="dynamic-css" type="text/css"></style>
 
 </head>
-<body class="g-css" ng-init="previewBg = '#fff'" style="background-color:{{previewBg}}">
+<body class="g-css" ng-controller="MainCtrl as main" style="background-color:{{main.options.previewBg}}">
 <div class="g-css-body">
 
+    <div class="g-header" >
+        <div class="header-settings">
+            <input type="text" ng-model="main.options.buttonText"/>
+            <span class="header-colorpicker" colorpicker ng-model="main.options.previewBg"><span ng-include="'/assets/images/icon-paint-bucket.svg'"></span></span>
+        </div>
+        <div class="header-stockButton">
+            <span class="stockButton-item"><a href="#" ng-click="main.load('spiro-disco-ball')" style="background-color: #1cd1ff"></a></span>
+            <span class="stockButton-item"><a href="#" ng-click="main.load('blue')" style="background-color: #3e84ff"></a></span>
+            <span class="stockButton-item"><a href="#" ng-click="main.load('purple')" style="background-color: #7e73ff"></a></span>
+            <span class="stockButton-item"><a href="#" ng-click="orchid" style="background-color: #e862e3"></a></span>
+            <span class="stockButton-item"><a href="#" ng-click="crimson-light" style="background-color: #ff669d"></a></span>
+            <span class="stockButton-item"><a href="#" ng-click="radical-red" style="background-color: #ff426a"></a></span>
+            <span class="stockButton-item"><a href="#" ng-click="tomato" style="background-color: #ff6042"></a></span>
+            <span class="stockButton-item"><a href="#" ng-click="yellow" style="background-color: #ffbd30"></a></span>
+            <span class="stockButton-item"><a href="#" ng-click="inchworm" style="background-color: #94ff51"></a></span>
+            <span class="stockButton-item"><a href="#" ng-click="spring-green" style="background-color: #00FF7F"></a></span>
+        </div>
+    </div>
+
     <div class="__builder-preview">
-        <span class="__preview-colorpicker" colorpicker ng-model="previewBg"><span ng-include="'assets/images/icon-paint-bucket.svg'"></span></span>
         <button-preview-list class="g-preview-list"></button-preview-list>
 
-        <pre class="__preview-code" render-directive="preview"></pre>
+        <div class="__preview-code" render-directive="preview">
+            <textarea name="code" class="code-textarea" onclick="this.select()"></textarea>
+            <pre class="code-pre"></pre>
+        </div>
+
     </div>
 
     <div class="builder-dashboard">
@@ -101,6 +123,7 @@
 <!-- Dev -->
 <!--<script src="assets/js/angular.min.js"></script>
 <script src="app/app.module.js"></script>
+<script src="app/home/Main.controller.js"></script>
 <script src="app/components/buttons/buttonList.component.js"></script>
 <script src="app/components/buttons/buttonPreviewList.component.js"></script>
 <script src="app/services/button.service.js"></script>

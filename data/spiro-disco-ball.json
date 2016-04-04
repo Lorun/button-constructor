@@ -2,32 +2,32 @@
   "options": {
     "className": "button",
     "separator" : "_",
-    "buttonText": "Default Button",
-    "previewBg": "#ffffff"
+    "buttonText": "Blue Button",
+    "previewBg": "#646a76"
   },
   "buttons": [
     {
       "modifier": null,
       "common": {
         "rules": {
-          "background": "#f95f7c",
-          "height": 50,
-          "line-height": 50,
-          "padding": 30,
-          "padding-left": 30,
-          "padding-right": 30,
+          "background": "#1cd1ff",
+          "height": 40,
+          "line-height": 40,
+          "padding": 20,
+          "padding-left": 20,
+          "padding-right": 20,
           "padding-top": 0,
           "padding-bottom": 0,
-          "font-size": 16,
+          "font-size": 14,
           "color": "#ffffff",
           "font-weight": "normal",
-          "border-radius": 5
+          "border-radius": 4
         },
         "groupRules": ["fill", "size", "font", "radius"]
       },
       "hover": {
         "rules": {
-          "background": "#f14062"
+          "background": "#00bcec"
         },
         "groupRules": ["fill"]
       },
@@ -40,32 +40,25 @@
     },
 
     {
-      "modifier": "blue",
+      "modifier": "big",
       "common": {
         "rules": {
-          "background": "#699aff"
+          "height": 50,
+          "line-height": 50,
+          "padding": 30,
+          "padding-left": 30,
+          "padding-right": 30,
+          "padding-top": 0,
+          "padding-bottom": 0,
+          "font-size": 16,
+          "color": "#ffffff",
+          "font-weight": "normal"
         },
-        "groupRules": ["fill"]
+        "groupRules": ["size", "font"]
       },
-      "hover": {
+      "disabled": {
         "rules": {
-          "background": "#5a8aec"
-        },
-        "groupRules": ["fill"]
-      }
-    },
-
-    {
-      "modifier": "green",
-      "common": {
-        "rules": {
-          "background": "#2acd67"
-        },
-        "groupRules": ["fill"]
-      },
-      "hover": {
-        "rules": {
-          "background": "#17c057"
+          "background": "#cbd0d6"
         },
         "groupRules": ["fill"]
       }
@@ -75,7 +68,6 @@
       "modifier": "small",
       "common": {
         "rules": {
-          "background": "#f95f7c",
           "height": 30,
           "line-height": 30,
           "padding": 15,
@@ -84,10 +76,16 @@
           "padding-top": 0,
           "padding-bottom": 0,
           "font-size": 13,
-          "font-weight": "bold",
-          "text-transform": "uppercase"
+          "color": "#ffffff",
+          "font-weight": "normal"
         },
-        "groupRules": ["fill", "size", "font"]
+        "groupRules": ["size", "font"]
+      },
+      "disabled": {
+        "rules": {
+          "background": "#cbd0d6"
+        },
+        "groupRules": ["fill"]
       }
     }
   ]

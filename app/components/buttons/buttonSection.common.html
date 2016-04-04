@@ -3,7 +3,7 @@
     <span class="class-name">
         <span class="class-name-separator">&{{$ctrl.options.separator}}</span>
         <input type="text" ng-pattern="word" format ng-model="$ctrl.options.className" ng-if="button.modifier == null">
-        <input type="text" ng-model="button.modifier" format ng-if="button.modifier !== null" autofocus>
+        <input type="text" ng-model="button.modifier" format ng-if="button.modifier !== null">
     </span>
 
     <ul class="builder-rulesList">

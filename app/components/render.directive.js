@@ -16,6 +16,7 @@
 
 
         function link($scope, element) {
+            var codeTextarea = element.find('textarea');
 
             $scope.buttons = ButtonService.getAll();
             $scope.options = ButtonService.getOptions();
@@ -30,7 +31,8 @@
 
             function onChange() {
                 var styles = Styles.compile().getStyles();
-                element.text(styles);
+                element.find('pre').text(styles);
+                codeTextarea.val(styles);
                 angular.element(document.getElementById('dynamic-css')).text(styles.replace(/[\.]([a-zA-Z])/g, '.g-preview-list .$1'));
             }
         }
