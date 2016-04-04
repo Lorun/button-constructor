@@ -92,6 +92,7 @@
             styles += tab + '-webkit-transition: all 0.25s;\n';
             styles += tab + 'transition: all 0.25s;\n';
             styles += tab + 'font-family: "Open Sans", sans-serif;\n';
+            styles += tab + 'margin: 0;\n';
 
             if (!hasBorder) {
                 styles += tab + 'border: none;\n';

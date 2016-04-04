@@ -27,18 +27,6 @@ a {
 }
 body {
     min-height: 100%;
-    &:before {
-        content: "";
-        display: block;
-        position: fixed;
-        z-index: 0;
-        top: 0;
-        bottom: 0;
-        right: 0;
-        width: 500px;
-        background-color: #2f4255;
-        border-left: 1px solid #2a3b4c;
-    }
 }
 
 input[type="text"],
@@ -51,103 +39,177 @@ input[type="number"] {
 .g-preview-list {
     float: left;
     width: 100%;
-    padding-top: 55px;
+    padding-top: 20px;
     padding-right: 40px;
 }
 .g-css-body {
-    min-height: 100%;
-    &:before {
-        content: "";
-        display: block;
-        position: fixed;
-        z-index: 0;
-        top: 0;
-        bottom: 0;
-        right: 501px;
-        width: 260px;
-        background-color: #eee;
-        border-left: 1px solid #e5e5e5;
-    }
+    position: relative;
+    height: 100%;
+    padding-top: 60px;
 }
-.g-css {
-    .__builder-preview {
+.g-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background-color: #1b2430;
+    padding: 10px 5px 10px 20px;
+
+    .header-colorpicker {
+        position: absolute;
+        top: 11px;
+        right: 15px;
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        svg {
+            width: 100%;
+            height: 100%;
+            fill: fade(#8195ba, 50%);
+            &:hover {
+                fill: fade(#cbe5ff, 50%);
+            }
+        }
+    }
+
+    .header-settings {
         position: relative;
         float: left;
-        width: calc(~'100% - 500px');
+        width: 35%;
         box-sizing: border-box;
-        padding: 0 260px 40px 40px;
-        text-align: left;
-        border-left: 1px solid #2a3b4c;
+        padding-right: 60px;
+        input[type="text"] {
+            display: block;
+            width: 100%;
+            margin: 0 auto;
+            background-color: fade(#fff, 5%);
+            border: 1px solid fade(#dce0e2, 15%);
+            color: #9dabbd;
+            padding: 5px 15px;
+            line-height: 30px;
+            height: 40px;
+            font-size: 20px;
+            border-radius: 5px;
+            text-align: left;
+            &:focus {
+                outline: none;
+                background-color: fade(#e6eaec, 10%);
+            }
+        }
+    }
 
-        .__preview-buttonText {
-            margin-bottom: 40px;
-            input[type="text"] {
+    .header-stockButton {
+        float: left;
+        width: 65%;
+        padding-left: 10px;
+        .stockButton-item {
+            display: block;
+            float: left;
+            width: 10%;
+            height: 40px;
+            padding-right: 10px;
+            a {
                 display: block;
                 width: 100%;
-                margin: 0 auto;
-                background-color: fade(#fff, 50%);
-                border: 1px solid fade(#dce0e2, 60%);
-                color: #1c2024;
-                padding: 5px 15px;
-                line-height: 40px;
-                height: 60px;
-                font-size: 24px;
-                border-radius: 5px;
-                text-align: left;
-                &:focus {
-                    outline: none;
-                    background-color: fade(#e6eaec, 60%);
-                }
+                height: 40px;
+                border-radius: 4px;
             }
+        }
+    }
+}
+
+.g-css {
+    .__builder-preview {
+        position: absolute;
+        top: 60px;
+        left: 0;
+        right: 500px;
+        bottom: 0;
+        overflow-y: auto;
+        box-sizing: border-box;
+        padding: 0 260px 0 20px;
+        text-align: left;
+        &:before {
+            content: "";
+            display: block;
+            position: fixed;
+            z-index: 0;
+            top: 60px;
+            right: 500px;
+            bottom: 0;
+            box-sizing: border-box;
+            width: 260px;
+            background-color: #eee;
+            border-left: 1px solid #e5e5e5;
         }
 
         .__preview-button {
             margin-bottom: 30px;
+            button {
+                margin-right: 10px;
+            }
         }
 
         .__preview-code {
             position: relative;
             float: right;
-            margin: 0 -259px 0 0;
-            width: 259px;
+            margin: 0 -260px 0 0;
+            width: 260px;
             text-align: left;
-            font-size: 10px;
-            padding: 20px 5px 20px 15px;
-            background-color: #eee;
+            overflow: hidden;
             &:after {
                 content: "";
                 display: block;
                 position: absolute;
+                z-index: 3;
                 top: 0;
                 right: 0;
                 bottom: 0;
                 width: 50px;
                 background: linear-gradient(to right, fade(#eee, 0), fade(#eee, 100));
             }
-        }
-        .__preview-colorpicker {
-            position: fixed;
-            top: 10px;
-            left: 10px;
-            display: inline-block;
-            width: 24px;
-            height: 24px;
-            svg {
-                width: 100%;
+            
+            .code-pre {
+                padding: 20px 5px 20px 15px;
+                margin: 0;
+                overflow: hidden;
+                font-family: "Courier New", Courier, monospace;
+                font-size: 10px;
+                color: transparent;
+            }
+            .code-textarea {
+                white-space: pre;
+                padding: 20px 5px 20px 15px;
+                overflow: hidden;
+                position: absolute;
+                box-sizing: border-box;
+                top: 0;
+                left: 0;
+                width: 500px;
                 height: 100%;
-                fill: fade(#515e75, 70%);
+                background-color: transparent;
+                border: none;
+                font-family: "Courier New", Courier, monospace;
+                font-size: 10px;
             }
         }
     }
 
 
     .builder-dashboard {
-        position: relative;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        bottom: 0;
+        overflow: auto;
         z-index: 1;
         float: right;
         width: 500px;
         box-sizing: border-box;
         background-color: #2f4255;
+        border-left: 1px solid #253342;
         color: #7a97af;
 
         input[type="text"],

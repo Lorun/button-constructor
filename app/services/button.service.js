@@ -142,10 +142,7 @@
 
     function ButtonService($http, Button) {
 
-        var options = {
-            className: 'button',
-            separator: '_'
-        };
+        var options = {};
         var buttons = [];
 
         return {
@@ -168,20 +165,21 @@
         }
 
         function loadJSON(param) {
+            buttons.length = 0;
+
             $http.get('data/' + param + '.json').success(function(json) {
-                for(var className in json) {
-                    options.className = className;
-                    angular.forEach(json[className], function(btn, i) {
-                        var _button = addButton();
-                        for (var state in btn) {
-                            _button.modifier = btn.modifier;
-                            if (state !== 'modifier') {
-                                _button.addState(state);
-                                angular.extend(_button[state], btn[state]);
-                            }
+                angular.extend(options, json.options);
+
+                angular.forEach(json.buttons, function(btn) {
+                    var _button = addButton();
+                    for (var state in btn) {
+                        _button.modifier = btn.modifier;
+                        if (state !== 'modifier') {
+                            _button.addState(state);
+                            angular.extend(_button[state], btn[state]);
                         }
-                    });
-                }
+                    }
+                });
             });
         }
 
