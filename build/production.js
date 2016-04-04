@@ -1080,6 +1080,7 @@
 
 
         function link($scope, element) {
+            var codeTextarea = element.find('textarea');
 
             $scope.buttons = ButtonService.getAll();
             $scope.options = ButtonService.getOptions();
@@ -1094,7 +1095,8 @@
 
             function onChange() {
                 var styles = Styles.compile().getStyles();
-                element.text(styles);
+                element.find('pre').text(styles);
+                codeTextarea.val(styles);
                 angular.element(document.getElementById('dynamic-css')).text(styles.replace(/[\.]([a-zA-Z])/g, '.g-preview-list .$1'));
             }
         }
@@ -1218,6 +1220,28 @@
                 }
                 $scope.$apply();
             });
+        }
+    }
+
+})();
+(function() {
+    'use strict';
+
+    angular
+        .module('app')
+        .controller('MainCtrl', MainController);
+
+    MainController.$inject = ['ButtonService'];
+
+    function MainController(ButtonService) {
+        var vm = this;
+
+        vm.options = ButtonService.getOptions();
+        vm.load = load;
+
+        function load(param) {
+            console.log(param);
+            ButtonService.loadJSON(param);
         }
     }
 
@@ -1366,10 +1390,7 @@
 
     function ButtonService($http, Button) {
 
-        var options = {
-            className: 'button',
-            separator: '_'
-        };
+        var options = {};
         var buttons = [];
 
         return {
@@ -1392,20 +1413,21 @@
         }
 
         function loadJSON(param) {
+            buttons.length = 0;
+
             $http.get('data/' + param + '.json').success(function(json) {
-                for(var className in json) {
-                    options.className = className;
-                    angular.forEach(json[className], function(btn, i) {
-                        var _button = addButton();
-                        for (var state in btn) {
-                            _button.modifier = btn.modifier;
-                            if (state !== 'modifier') {
-                                _button.addState(state);
-                                angular.extend(_button[state], btn[state]);
-                            }
+                angular.extend(options, json.options);
+
+                angular.forEach(json.buttons, function(btn) {
+                    var _button = addButton();
+                    for (var state in btn) {
+                        _button.modifier = btn.modifier;
+                        if (state !== 'modifier') {
+                            _button.addState(state);
+                            angular.extend(_button[state], btn[state]);
                         }
-                    });
-                }
+                    }
+                });
             });
         }
 
@@ -1550,6 +1572,7 @@
             styles += tab + '-webkit-transition: all 0.25s;\n';
             styles += tab + 'transition: all 0.25s;\n';
             styles += tab + 'font-family: "Open Sans", sans-serif;\n';
+            styles += tab + 'margin: 0;\n';
 
             if (!hasBorder) {
                 styles += tab + 'border: none;\n';
