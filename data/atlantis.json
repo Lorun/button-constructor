@@ -2,7 +2,7 @@
   "options": {
     "className": "button",
     "separator" : "_",
-    "buttonText": "Purple Button",
+    "buttonText": "Atlantis Button",
     "previewBg": "#ffffff"
   },
   "buttons": [
@@ -10,7 +10,7 @@
       "modifier": null,
       "common": {
         "rules": {
-          "background": "#7e73ff",
+          "background": "#7cdd39",
           "height": 40,
           "line-height": 40,
           "padding": 20,
@@ -27,13 +27,13 @@
       },
       "hover": {
         "rules": {
-          "background": "#675de5"
+          "background": "#66c722"
         },
         "groupRules": ["fill"]
       },
       "disabled": {
         "rules": {
-          "background": "#b2bcce"
+          "background": "#d2d8cf"
         },
         "groupRules": ["fill"]
       }

@@ -55,12 +55,6 @@
           "font-weight": "normal"
         },
         "groupRules": ["size", "font"]
-      },
-      "disabled": {
-        "rules": {
-          "background": "#b2bcce"
-        },
-        "groupRules": ["fill"]
       }
     },
 
@@ -80,12 +74,6 @@
           "font-weight": "normal"
         },
         "groupRules": ["size", "font"]
-      },
-      "disabled": {
-        "rules": {
-          "background": "#b2bcce"
-        },
-        "groupRules": ["fill"]
       }
     }
   ]

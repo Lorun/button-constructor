@@ -2,15 +2,15 @@
   "options": {
     "className": "button",
     "separator" : "_",
-    "buttonText": "Blue Button",
-    "previewBg": "#646a76"
+    "buttonText": "Spring green Button",
+    "previewBg": "#ffffff"
   },
   "buttons": [
     {
       "modifier": null,
       "common": {
         "rules": {
-          "background": "#1cd1ff",
+          "background": "#00e070",
           "height": 40,
           "line-height": 40,
           "padding": 20,
@@ -27,13 +27,13 @@
       },
       "hover": {
         "rules": {
-          "background": "#00bcec"
+          "background": "#00c361"
         },
         "groupRules": ["fill"]
       },
       "disabled": {
         "rules": {
-          "background": "#cbd0d6"
+          "background": "#d2d8cf"
         },
         "groupRules": ["fill"]
       }
@@ -55,12 +55,6 @@
           "font-weight": "normal"
         },
         "groupRules": ["size", "font"]
-      },
-      "disabled": {
-        "rules": {
-          "background": "#cbd0d6"
-        },
-        "groupRules": ["fill"]
       }
     },
 
@@ -80,12 +74,6 @@
           "font-weight": "normal"
         },
         "groupRules": ["size", "font"]
-      },
-      "disabled": {
-        "rules": {
-          "background": "#cbd0d6"
-        },
-        "groupRules": ["fill"]
       }
     }
   ]

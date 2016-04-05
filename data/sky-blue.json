@@ -2,7 +2,7 @@
   "options": {
     "className": "button",
     "separator" : "_",
-    "buttonText": "Purple Button",
+    "buttonText": "Sky blue Button",
     "previewBg": "#ffffff"
   },
   "buttons": [
@@ -10,7 +10,7 @@
       "modifier": null,
       "common": {
         "rules": {
-          "background": "#7e73ff",
+          "background": "#05ccf6",
           "height": 40,
           "line-height": 40,
           "padding": 20,
@@ -27,13 +27,13 @@
       },
       "hover": {
         "rules": {
-          "background": "#675de5"
+          "background": "#00b5db"
         },
         "groupRules": ["fill"]
       },
       "disabled": {
         "rules": {
-          "background": "#b2bcce"
+          "background": "#cbd0d6"
         },
         "groupRules": ["fill"]
       }

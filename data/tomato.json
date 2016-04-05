@@ -2,7 +2,7 @@
   "options": {
     "className": "button",
     "separator" : "_",
-    "buttonText": "Purple Button",
+    "buttonText": "Tomato Button",
     "previewBg": "#ffffff"
   },
   "buttons": [
@@ -10,7 +10,7 @@
       "modifier": null,
       "common": {
         "rules": {
-          "background": "#7e73ff",
+          "background": "#ff6042",
           "height": 40,
           "line-height": 40,
           "padding": 20,
@@ -27,7 +27,7 @@
       },
       "hover": {
         "rules": {
-          "background": "#675de5"
+          "background": "#ec4f32"
         },
         "groupRules": ["fill"]
       },
