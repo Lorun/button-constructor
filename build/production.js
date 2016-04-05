@@ -1518,15 +1518,30 @@
                 separator = options.separator;
 
                 // Clean old styles
-                styles = '/* Button Component styles */\n';
+                styles = '/* BUTTONS */\n';
+                styles += '/* ============================== */\n';
 
                 angular.forEach(_buttons, function(button) {
                     var buttonCopy = angular.copy(button);
                     for (var section in buttonCopy) {
-                        if (buttonCopy.hasOwnProperty(section) && section != 'modifier' && !!button[section]) {
+                        if (buttonCopy.hasOwnProperty(section)
+                            && section !== 'modifier'
+                            && section !== 'disabled'
+                            && !!button[section]) {
                             _compileSilentBtn(button, section, buttonClass);
                             _mainButtonRules = _buttons[0].common.rules;
                         }
+                    }
+                });
+
+                var commentAdded = false;
+                angular.forEach(_buttons, function(button) {
+                    if (button.disabled) {
+                        if (!commentAdded) {
+                            styles += '\n/* Disabled states */\n';
+                            commentAdded = true;
+                        }
+                        _compileSilentBtn(button, 'disabled', buttonClass);
                     }
                 });
             }
@@ -1564,15 +1579,20 @@
          * Set common styles for general Button
          */
         function setCommon(hasBorder) {
+            styles += tab + 'font-family: "Open Sans", sans-serif;\n';
             styles += tab + 'box-sizing: border-box;\n';
             styles += tab + 'display: inline-block;\n';
             styles += tab + 'cursor: pointer;\n';
             styles += tab + 'outline: none;\n';
             styles += tab + 'text-decoration: none;\n';
+            styles += tab + 'margin: 0;\n';
+            styles += tab + 'white-space: nowrap;\n';
             styles += tab + '-webkit-transition: all 0.25s;\n';
             styles += tab + 'transition: all 0.25s;\n';
-            styles += tab + 'font-family: "Open Sans", sans-serif;\n';
-            styles += tab + 'margin: 0;\n';
+            styles += tab + '-webkit-user-select: none;\n';
+            styles += tab + '-moz-user-select: none;\n';
+            styles += tab + '-ms-user-select: none;\n';
+            styles += tab + 'user-select: none;\n';
 
             if (!hasBorder) {
                 styles += tab + 'border: none;\n';
@@ -1658,7 +1678,7 @@
                 }
             };
             render.shadow = function() {
-                if (!!rules['box-shadow-color'] && !!rules['box-shadow-blur'])
+                if (!!rules['box-shadow-color'] && rules['box-shadow-blur'] >= 0)
                 {
                     var old_box_shadow = _mainButtonRules['box-shadow-x'] + units + ' ' + _mainButtonRules['box-shadow-y'] + units + ' ' + _mainButtonRules['box-shadow-blur'] + units + ' ' + _mainButtonRules['box-shadow-color'];
                     var box_shadow = rules['box-shadow-x'] + units + ' ' + rules['box-shadow-y'] + units + ' ' + rules['box-shadow-blur'] + units + ' ' + rules['box-shadow-color'];
