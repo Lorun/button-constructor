@@ -72,10 +72,27 @@
     },
 
     {
+      "modifier": "medium",
+      "common": {
+        "rules": {
+          "height": 40,
+          "line-height": 40,
+          "padding": 20,
+          "padding-left": 20,
+          "padding-right": 20,
+          "padding-top": 0,
+          "padding-bottom": 0,
+          "font-size": 14,
+          "border-radius": 4
+        },
+        "groupRules": ["size", "font", "radius"]
+      }
+    },
+
+    {
       "modifier": "small",
       "common": {
         "rules": {
-          "background": "#f95f7c",
           "height": 30,
           "line-height": 30,
           "padding": 15,
@@ -84,10 +101,9 @@
           "padding-top": 0,
           "padding-bottom": 0,
           "font-size": 13,
-          "font-weight": "bold",
-          "text-transform": "uppercase"
+          "border-radius": 4
         },
-        "groupRules": ["fill", "size", "font"]
+        "groupRules": ["size", "font", "radius"]
       }
     }
   ]
